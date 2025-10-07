@@ -42,6 +42,8 @@ public interface Algorithm {
     String Ed25519 = "Ed25519";
     String Ed448 = "Ed448";
 
+    String MLDSA65 = "ML-DSA-65";
+
     /* RSA Encryption Algorithms */
     String RSA1_5 = CryptoConstants.RSA1_5;
     String RSA_OAEP = CryptoConstants.RSA_OAEP;

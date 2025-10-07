@@ -42,7 +42,8 @@ public enum Algorithm {
     ES512(AlgorithmType.ECDSA, null),
     EdDSA(AlgorithmType.EDDSA, null),
     Ed25519(AlgorithmType.EDDSA, null),
-    Ed448(AlgorithmType.EDDSA, null)
+    Ed448(AlgorithmType.EDDSA, null),
+    MLDSA65(AlgorithmType.MLDSA, null),
     ;
 
     private AlgorithmType type;

@@ -11,3 +11,4 @@ org.keycloak.crypto.HS256ClientSignatureVerifierProviderFactory
 org.keycloak.crypto.HS384ClientSignatureVerifierProviderFactory
 org.keycloak.crypto.HS512ClientSignatureVerifierProviderFactory
 org.keycloak.crypto.EdDSAClientSignatureVerifierProviderFactory
+org.keycloak.crypto.MLDSA65ClientSignatureVerifierProviderFactory

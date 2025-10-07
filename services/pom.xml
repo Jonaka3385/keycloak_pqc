@@ -291,6 +291,8 @@
                             <version>${jboss-logging-annotations.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                    <source>24</source>
+                    <target>24</target>
                 </configuration>
             </plugin>
             <plugin>

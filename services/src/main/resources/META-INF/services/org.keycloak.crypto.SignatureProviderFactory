@@ -11,3 +11,4 @@ org.keycloak.crypto.PS256SignatureProviderFactory
 org.keycloak.crypto.PS384SignatureProviderFactory
 org.keycloak.crypto.PS512SignatureProviderFactory
 org.keycloak.crypto.EdDSASignatureProviderFactory
+org.keycloak.crypto.MLDSA65SignatureProviderFactory
