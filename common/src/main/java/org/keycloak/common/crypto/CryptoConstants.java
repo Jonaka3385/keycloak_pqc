@@ -15,11 +15,17 @@ public class CryptoConstants {
     public static final String ECDH_ES_A192KW = "ECDH-ES+A192KW";
     public static final String ECDH_ES_A256KW = "ECDH-ES+A256KW";
 
+    public static final String MLKEM512 = "ML-KEM-512";
+    public static final String MLKEM768 = "ML-KEM-768";
+    public static final String MLKEM1024 = "ML-KEM-1024";
+    public static final String MLDSA65 = "ML-DSA-65";
+
     // Constant for the OCSP provider
     // public static final String OCSP = "OCSP";
 
     /** Name of Java security provider used with non-fips BouncyCastle. Should be used in non-FIPS environment */
     public static final String BC_PROVIDER_ID = "BC";
+    public static final String BC_PQC_PROVIDER_ID = "BCPQC";
 
     /** Name of Java security provider used with fips BouncyCastle. Should be used in FIPS environment */
     public static final String BCFIPS_PROVIDER_ID = "BCFIPS";

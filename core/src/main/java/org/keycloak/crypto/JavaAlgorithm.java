@@ -39,6 +39,8 @@ public class JavaAlgorithm {
     public static final String SHA512 = "SHA-512";
     public static final String SHAKE256 = "SHAKE256";
 
+    public static final String MLDSA65 = "ML-DSA-65";
+
     public static String getJavaAlgorithm(String algorithm) {
         return getJavaAlgorithm(algorithm, null);
     }
@@ -74,6 +76,8 @@ public class JavaAlgorithm {
                     return curve;
                 }
                 return Ed25519;
+            case Algorithm.MLDSA65:
+                return MLDSA65;
             case Algorithm.AES:
                 return AES;
             default:
@@ -88,27 +92,18 @@ public class JavaAlgorithm {
     public static String getJavaAlgorithmForHash(String algorithm, String curve) {
         switch (algorithm) {
             case Algorithm.RS256:
-                return SHA256;
-            case Algorithm.RS384:
-                return SHA384;
-            case Algorithm.RS512:
-                return SHA512;
             case Algorithm.HS256:
-                return SHA256;
-            case Algorithm.HS384:
-                return SHA384;
-            case Algorithm.HS512:
-                return SHA512;
             case Algorithm.ES256:
-                return SHA256;
-            case Algorithm.ES384:
-                return SHA384;
-            case Algorithm.ES512:
-                return SHA512;
             case Algorithm.PS256:
                 return SHA256;
+            case Algorithm.RS384:
+            case Algorithm.HS384:
+            case Algorithm.ES384:
             case Algorithm.PS384:
                 return SHA384;
+            case Algorithm.RS512:
+            case Algorithm.HS512:
+            case Algorithm.ES512:
             case Algorithm.PS512:
                 return SHA512;
             case Algorithm.EdDSA:
@@ -123,6 +118,8 @@ public class JavaAlgorithm {
                     }
                 }
                 return SHA512;
+            case MLDSA65:
+                return SHAKE256;
             case Algorithm.AES:
                 return AES;
             default:
@@ -140,6 +137,8 @@ public class JavaAlgorithm {
             case Algorithm.Ed448:
             case Algorithm.Ed25519:
                 return KeyType.OKP;
+            case Algorithm.MLDSA65:
+                return KeyType.AKP;
             default:
                 return KeyType.OCT;
         }
@@ -155,6 +154,10 @@ public class JavaAlgorithm {
 
     public static boolean isEddsaJavaAlgorithm(String algorithm) {
         return getJavaAlgorithm(algorithm).contains("Ed");
+    }
+
+    public static boolean isMldsaJavaAlgorithm(String algorithm) {
+        return getJavaAlgorithm(algorithm).contains("ML-DSA");
     }
 
     public static boolean isHMACJavaAlgorithm(String algorithm) {

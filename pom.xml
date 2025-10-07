@@ -37,9 +37,9 @@
     <properties>
         <!-- Maven -->
         <maven.version>3.9.8</maven.version>
-        <maven.compiler.source>24</maven.compiler.source>
-        <maven.compiler.target>24</maven.compiler.target>
-        <maven.compiler.release>24</maven.compiler.release>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
 
         <project.version.npm>999.0.0-SNAPSHOT</project.version.npm>
 

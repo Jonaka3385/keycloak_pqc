@@ -104,6 +104,8 @@ public class JavaKeystoreKeyProvider implements KeyProvider {
                     loadECKey(keyStore, keyAlias, KeyUse.ENC);
                 case Algorithm.EdDSA ->
                     loadEdDSAKey(keyStore, keyAlias, KeyUse.SIG);
+                case Algorithm.MLDSA65 ->
+                        loadMLDSA65Key(keyStore, keyAlias, KeyUse.SIG);
                 case Algorithm.AES ->
                     loadOctKey(keyStore, keyAlias, JavaAlgorithm.getJavaAlgorithm(algorithm), KeyUse.ENC);
                 case Algorithm.HS256, Algorithm.HS384, Algorithm.HS512 ->
@@ -188,6 +190,21 @@ public class JavaKeystoreKeyProvider implements KeyProvider {
         } catch (RuntimeException e) {
             throw new UnrecoverableKeyException(String.format("Invalid EdDSA curve for alias %s. Curve algorithm is %s.",
                     keyAlias, privateKey.getParams().getName()));
+        }
+
+        PublicKey publicKey = x509Cert.getPublicKey();
+        KeyPair keyPair = new KeyPair(publicKey, privateKey);
+        return createKeyWrapper(keyPair, x509Cert, loadCertificateChain(privateKeyEntry), KeyType.OKP, keyUse, privateKey.getParams().getName());
+    }
+
+    private KeyWrapper loadMLDSA65Key(KeyStore keyStore, String keyAlias, KeyUse keyUse) throws GeneralSecurityException {
+        KeyStore.PrivateKeyEntry privateKeyEntry = checkKeyEntry(keyStore, keyAlias, KeyStore.PrivateKeyEntry.class, keyUse);
+        EdECPrivateKey privateKey = checkKey(privateKeyEntry.getPrivateKey(), keyAlias, EdECPrivateKey.class, null);
+        X509Certificate x509Cert = checkCertificate(privateKeyEntry.getCertificate());
+        try {
+            JavaAlgorithm.getJavaAlgorithmForHash(Algorithm.MLDSA65, privateKey.getParams().getName());
+        } catch (RuntimeException e) {
+            throw new UnrecoverableKeyException("Invalid params.");
         }
 
         PublicKey publicKey = x509Cert.getPublicKey();

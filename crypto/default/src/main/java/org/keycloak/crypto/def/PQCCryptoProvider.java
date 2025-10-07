@@ -18,23 +18,18 @@ import java.security.cert.CollectionCertStoreParameters;
 import java.security.spec.ECParameterSpec;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Supplier;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKeyFactory;
 import javax.net.ssl.SSLSocketFactory;
 
-import org.bouncycastle.jce.ECNamedCurveTable;
-import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
-import org.bouncycastle.jce.spec.ECNamedCurveSpec;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.jboss.logging.Logger;
 import org.keycloak.common.crypto.CryptoProvider;
 import org.keycloak.common.crypto.CryptoConstants;
-import org.keycloak.common.crypto.ECDSACryptoProvider;
 import org.keycloak.common.crypto.CertificateUtilsProvider;
+import org.keycloak.common.crypto.ECDSACryptoProvider;
 import org.keycloak.common.crypto.PemUtilsProvider;
 import org.keycloak.common.crypto.UserIdentityExtractorProvider;
 import org.keycloak.common.util.BouncyIntegration;
@@ -44,41 +39,36 @@ import org.keycloak.crypto.JavaAlgorithm;
 /**
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */
-public class DefaultCryptoProvider implements CryptoProvider {
+public class PQCCryptoProvider implements CryptoProvider {
 
     private static final Logger log = Logger.getLogger(DefaultCryptoProvider.class);
 
-    private final Provider bcProvider;
+    private final Provider bcpqcProvider;
 
     private Map<String, Object> providers = new ConcurrentHashMap<>();
 
-    public DefaultCryptoProvider() {
+    public PQCCryptoProvider() {
         // Make sure to instantiate this only once due it is expensive. And skip registration if already available in Java security providers (EG. due explicitly configured in java security file)
-        Provider existingBc = Security.getProvider(CryptoConstants.BC_PROVIDER_ID);
-        this.bcProvider = existingBc == null ? new BouncyCastleProvider() : existingBc;
+        Provider existingBcPqc = Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID);
+        this.bcpqcProvider = existingBcPqc == null ? new BouncyCastlePQCProvider() : existingBcPqc;
 
-        providers.put(CryptoConstants.A128KW, new AesKeyWrapAlgorithmProvider());
-        providers.put(CryptoConstants.RSA1_5, new DefaultRsaKeyEncryptionJWEAlgorithmProvider("RSA/ECB/PKCS1Padding"));
-        providers.put(CryptoConstants.RSA_OAEP, new DefaultRsaKeyEncryptionJWEAlgorithmProvider("RSA/ECB/OAEPWithSHA-1AndMGF1Padding"));
-        providers.put(CryptoConstants.RSA_OAEP_256, new DefaultRsaKeyEncryption256JWEAlgorithmProvider("RSA/ECB/OAEPWithSHA-256AndMGF1Padding"));
-        providers.put(CryptoConstants.ECDH_ES, new BCEcdhEsAlgorithmProvider());
-        providers.put(CryptoConstants.ECDH_ES_A128KW, new BCEcdhEsAlgorithmProvider());
-        providers.put(CryptoConstants.ECDH_ES_A192KW, new BCEcdhEsAlgorithmProvider());
-        providers.put(CryptoConstants.ECDH_ES_A256KW, new BCEcdhEsAlgorithmProvider());
-        providers.put(CryptoConstants.MLDSA65, new PQCCryptoProvider());
+        //providers.put(CryptoConstants.MLDSA65, new BCMldsa65AlgorithmProvider());
 
-        if (existingBc == null) {
-            Security.addProvider(this.bcProvider);
-            log.debugv("Loaded {0} security provider", this.bcProvider.getClass().getName());
+        providers.put(CryptoConstants.MLKEM512, new BCMlkemAlgorithmProvider());
+        providers.put(CryptoConstants.MLKEM768, new BCMlkemAlgorithmProvider());
+        providers.put(CryptoConstants.MLKEM1024, new BCMlkemAlgorithmProvider());
+
+        if (existingBcPqc == null) {
+            Security.addProvider(this.bcpqcProvider);
+            log.debugv("Loaded {0} security provider", this.bcpqcProvider.getClass().getName());
         } else {
-            log.debugv("Security provider {0} already loaded", this.bcProvider.getClass().getName());
+            log.debugv("Security provider {0} already loaded", this.bcpqcProvider.getClass().getName());
         }
     }
 
-
     @Override
     public Provider getBouncyCastleProvider() {
-        return bcProvider;
+        return bcpqcProvider;
     }
 
     @Override
@@ -106,9 +96,8 @@ public class DefaultCryptoProvider implements CryptoProvider {
     }
 
     @Override
-    public ECParameterSpec createECParams(String curveName) {
-        ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec(curveName);
-        return new ECNamedCurveSpec("prime256v1", spec.getCurve(), spec.getG(), spec.getN());
+    public ECParameterSpec createECParams(String curveName) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ECC not supported in PQC");
     }
 
     @Override
@@ -117,8 +106,8 @@ public class DefaultCryptoProvider implements CryptoProvider {
     }
 
     @Override
-    public ECDSACryptoProvider getEcdsaCryptoProvider() {
-        return new BCECDSACryptoProvider();
+    public ECDSACryptoProvider getEcdsaCryptoProvider() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("ECC not supported in PQC");
     }
 
 
@@ -141,8 +130,8 @@ public class DefaultCryptoProvider implements CryptoProvider {
 
 
     @Override
-    public Cipher getAesCbcCipher() throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException {
-        return Cipher.getInstance("AES/CBC/PKCS7Padding", BouncyIntegration.PROVIDER);
+    public Cipher getAesCbcCipher() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("AES-CBC not supported in PQC");
     }
 
     @Override

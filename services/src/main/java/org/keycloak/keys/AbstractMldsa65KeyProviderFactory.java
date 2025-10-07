@@ -39,7 +39,7 @@ public abstract class AbstractMldsa65KeyProviderFactory implements KeyProviderFa
     protected static ProviderConfigProperty MLDSA65_PROPERTY = new ProviderConfigProperty(ALGORITHM,
             "ML-DSA-65", "Generates ML-DSA-65 keys", LIST_TYPE,
             ALGORITHM);
- 
+
     public final static ProviderConfigurationBuilder configurationBuilder() {
         return ProviderConfigurationBuilder.create()
                 .property(Attributes.PRIORITY_PROPERTY)

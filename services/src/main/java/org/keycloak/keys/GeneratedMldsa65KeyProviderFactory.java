@@ -21,22 +21,14 @@ import org.keycloak.common.util.Base64;
 import org.keycloak.common.util.MultivaluedHashMap;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.component.ComponentValidationException;
-import org.keycloak.crypto.Algorithm;
 import org.keycloak.crypto.KeyUse;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
-import org.keycloak.provider.ConfigurationValidationHelper;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import java.security.KeyFactory;
 import java.security.KeyPair;
-import java.security.interfaces.EdECPublicKey;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.List;
 
-/**
- * @author <a href="mailto:takashi.norimatsu.ws@hitachi.com">Takashi Norimatsu</a>
- */
 public class GeneratedMldsa65KeyProviderFactory extends AbstractMldsa65KeyProviderFactory {
 
     private static final Logger logger = Logger.getLogger(GeneratedMldsa65KeyProviderFactory.class);
@@ -46,7 +38,7 @@ public class GeneratedMldsa65KeyProviderFactory extends AbstractMldsa65KeyProvid
     private static final String HELP_TEXT = "Generates ML-DSA-65 keys";
 
     private static final List<ProviderConfigProperty> CONFIG_PROPERTIES = AbstractMldsa65KeyProviderFactory.configurationBuilder()
-            .property('')
+            .property(MLDSA65_PROPERTY)
             .build();
 
     @Override
