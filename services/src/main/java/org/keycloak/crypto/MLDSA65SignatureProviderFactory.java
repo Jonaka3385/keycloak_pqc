@@ -20,7 +20,7 @@ import org.keycloak.models.KeycloakSession;
 
 public class MLDSA65SignatureProviderFactory implements SignatureProviderFactory {
 
-    public static final String ID = "ML-DSA-65";
+    public static final String ID = Algorithm.MLDSA65;
 
     @Override
     public String getId() {

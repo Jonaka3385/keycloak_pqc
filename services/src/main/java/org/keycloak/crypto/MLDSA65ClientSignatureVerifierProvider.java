@@ -25,7 +25,7 @@ import org.keycloak.models.KeycloakSession;
 public class MLDSA65ClientSignatureVerifierProvider implements ClientSignatureVerifierProvider {
 
     private final KeycloakSession session;
-    private final String ALGORITHM = Algorithm.MLDSA65;
+    private final String algorithm = Algorithm.MLDSA65;
 
     public MLDSA65ClientSignatureVerifierProvider(KeycloakSession session) {
         this.session = session;
@@ -38,7 +38,7 @@ public class MLDSA65ClientSignatureVerifierProvider implements ClientSignatureVe
 
     @Override
     public String getAlgorithm() {
-        return ALGORITHM;
+        return algorithm;
     }
 
     @Override

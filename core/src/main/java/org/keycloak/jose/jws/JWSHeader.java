@@ -103,7 +103,6 @@ public class JWSHeader implements JOSEHeader {
 
     static {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
     }
 
     public String toString() {
@@ -112,8 +111,5 @@ public class JWSHeader implements JOSEHeader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
-
 }

@@ -16,15 +16,24 @@
  */
 package org.keycloak.crypto;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.keycloak.common.VerificationException;
 import org.keycloak.common.crypto.CryptoIntegration;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Security;
 import java.security.Signature;
 
 public class AsymmetricSignatureVerifierContext implements SignatureVerifierContext {
+
+    static {
+        if (Security.getProvider("BCPQC") == null) {
+            Security.addProvider(new BouncyCastlePQCProvider());
+        }
+    }
 
     private final KeyWrapper key;
 
@@ -50,14 +59,17 @@ public class AsymmetricSignatureVerifierContext implements SignatureVerifierCont
             verifier.update(data);
             return verifier.verify(signature);
         } catch (Exception e) {
-            throw new VerificationException("Signing failed", e);
+            throw new VerificationException("Verification failed", e);
         }
     }
 
-    private Signature getSignature()
-            throws NoSuchAlgorithmException, NoSuchProviderException {
+    private Signature getSignature() throws NoSuchAlgorithmException, NoSuchProviderException {
         try {
-            return Signature.getInstance(JavaAlgorithm.getJavaAlgorithm(key.getAlgorithmOrDefault(), key.getCurve()));
+            if (JavaAlgorithm.isMldsaJavaAlgorithm(key.getAlgorithm())) {
+                return Signature.getInstance(key.getAlgorithm(), "BCPQC");
+            } else {
+                return Signature.getInstance(JavaAlgorithm.getJavaAlgorithm(key.getAlgorithmOrDefault(), key.getCurve()));
+            }
         } catch (NoSuchAlgorithmException e) {
             // Retry using the current crypto provider's override implementation
             return CryptoIntegration.getProvider().getSignature(key.getAlgorithmOrDefault());
