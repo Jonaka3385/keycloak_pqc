@@ -17,6 +17,7 @@
 
 package org.keycloak.testsuite.rest.resource;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.jboss.resteasy.reactive.NoCache;
 
 import javax.crypto.SecretKey;
@@ -82,8 +83,10 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.security.spec.ECGenParameterSpec;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,6 +99,12 @@ import java.util.stream.Stream;
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */
 public class TestingOIDCEndpointsApplicationResource {
+
+    static {
+        if (Security.getProvider("BCPQC") == null) {
+            Security.addProvider(new BouncyCastlePQCProvider());
+        }
+    }
 
     public static final String PRIVATE_KEY = "privateKey";
     public static final String PUBLIC_KEY = "publicKey";
@@ -166,6 +175,10 @@ public class TestingOIDCEndpointsApplicationResource {
                     keyUse = KeyUse.ENC;
                     keyPair = KeyUtils.generateRsaKeyPair(2048);
                     break;
+                case Algorithm.MLDSA65:
+                    keyType = KeyType.AKP;
+                    keyPair = generateMldsa65KeyPair();
+                    break;
                 default :
                     throw new RuntimeException("Unsupported signature algorithm");
             }
@@ -201,6 +214,16 @@ public class TestingOIDCEndpointsApplicationResource {
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance(curveName);
         KeyPair keyPair = keyGen.generateKeyPair();
         return keyPair;
+    }
+
+    private KeyPair generateMldsa65KeyPair() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+        KeyPairGenerator keyGen;
+        try {
+            keyGen = KeyPairGenerator.getInstance("ML-DSA-65", "BCPQC");
+        } catch (NoSuchProviderException e) {
+            throw new RuntimeException(e);
+        }
+        return keyGen.generateKeyPair();
     }
 
     @GET
@@ -253,6 +276,8 @@ public class TestingOIDCEndpointsApplicationResource {
                         return builder.ec(keyPair.getPublic());
                     } else if (KeyType.OKP.equals(keyType)) {
                         return builder.okp(keyPair.getPublic());
+                    } else if (KeyType.AKP.equals(keyType)) {
+                        return builder.akp(keyPair.getPublic());
                     } else {
                         throw new IllegalArgumentException("Unknown keyType: " + keyType);
                     }

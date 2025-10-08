@@ -18,10 +18,7 @@ package org.keycloak.crypto;
 
 import org.keycloak.Config;
 import org.keycloak.models.KeycloakSessionFactory;
-import org.keycloak.provider.ProviderConfigProperty;
 import org.keycloak.provider.ProviderFactory;
-
-import java.util.List;
 
 public interface SignatureProviderFactory extends ProviderFactory<SignatureProvider> {
 
@@ -36,5 +33,4 @@ public interface SignatureProviderFactory extends ProviderFactory<SignatureProvi
     @Override
     default void close() {
     }
-
 }

@@ -26,22 +26,10 @@ public class AKPPublicJWK extends JWK {
 
     public static final String AKP = KeyType.AKP;
 
-    public static final String ALG = "alg";
     public static final String PUB = "pub";
-
-    @JsonProperty(ALG)
-    private String alg;
 
     @JsonProperty(PUB)
     private String pub;
-
-    public String getAlg() {
-        return alg;
-    }
-
-    public void setAlg(String alg) {
-        this.alg = alg;
-    }
 
     public String getPub() {
         return pub;
@@ -56,8 +44,8 @@ public class AKPPublicJWK extends JWK {
     public <T> T getOtherClaim(String claimName, Class<T> claimType) {
         Object claim = null;
         switch (claimName) {
-            case ALG:
-                claim = getAlg();
+            case ALGORITHM:
+                claim = getAlgorithm();
                 break;
             case PUB:
                 claim = getPub();

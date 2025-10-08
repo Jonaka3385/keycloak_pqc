@@ -42,14 +42,18 @@ import java.util.Optional;
                             .filter(certs -> !certs.isEmpty())
                             .orElseGet(() -> Optional.ofNullable(k.getCertificate()).map(Collections::singletonList)
                                                      .orElseGet(Collections::emptyList));
-                    if (k.getType().equals(KeyType.RSA)) {
-                        return b.rsa(k.getPublicKey(), certificates, k.getUse());
-                    } else if (k.getType().equals(KeyType.EC)) {
-                        return b.ec(k.getPublicKey(), certificates, k.getUse());
-                    } else if (k.getType().equals(KeyType.OKP)) {
-                        return b.okp(k.getPublicKey(), k.getUse());
+                    switch (k.getType()) {
+                        case KeyType.RSA:
+                            return b.rsa(k.getPublicKey(), certificates, k.getUse());
+                        case KeyType.EC:
+                            return b.ec(k.getPublicKey(), certificates, k.getUse());
+                        case KeyType.OKP:
+                            return b.okp(k.getPublicKey(), k.getUse());
+                        case KeyType.AKP:
+                            return b.akp(k.getPublicKey(), k.getUse());
+                        default:
+                            return null;
                     }
-                    return null;
                 })
                 .filter(Objects::nonNull)
                 .toArray(JWK[]::new);

@@ -35,7 +35,7 @@ public class MLDSA65SignatureProvider implements SignatureProvider {
 
     @Override
     public SignatureSignerContext signer(KeyWrapper key) throws SignatureException {
-        SignatureProvider.checkKeyForSignature(key, Algorithm.MLDSA65, KeyType.OKP);
+        SignatureProvider.checkKeyForSignature(key, Algorithm.MLDSA65, KeyType.AKP);
         return new ServerMLDSA65SignatureSignerContext(key);
     }
 

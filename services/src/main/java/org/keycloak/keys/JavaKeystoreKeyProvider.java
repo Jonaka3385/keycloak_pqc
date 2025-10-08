@@ -41,6 +41,7 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
+import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -105,7 +106,7 @@ public class JavaKeystoreKeyProvider implements KeyProvider {
                 case Algorithm.EdDSA ->
                     loadEdDSAKey(keyStore, keyAlias, KeyUse.SIG);
                 case Algorithm.MLDSA65 ->
-                        loadMLDSA65Key(keyStore, keyAlias, KeyUse.SIG);
+                    loadMLDSA65Key(keyStore, keyAlias, KeyUse.SIG);
                 case Algorithm.AES ->
                     loadOctKey(keyStore, keyAlias, JavaAlgorithm.getJavaAlgorithm(algorithm), KeyUse.ENC);
                 case Algorithm.HS256, Algorithm.HS384, Algorithm.HS512 ->
@@ -199,17 +200,17 @@ public class JavaKeystoreKeyProvider implements KeyProvider {
 
     private KeyWrapper loadMLDSA65Key(KeyStore keyStore, String keyAlias, KeyUse keyUse) throws GeneralSecurityException {
         KeyStore.PrivateKeyEntry privateKeyEntry = checkKeyEntry(keyStore, keyAlias, KeyStore.PrivateKeyEntry.class, keyUse);
-        EdECPrivateKey privateKey = checkKey(privateKeyEntry.getPrivateKey(), keyAlias, EdECPrivateKey.class, null);
+        PrivateKey privateKey = checkKey(privateKeyEntry.getPrivateKey(), keyAlias, PrivateKey.class, null);
         X509Certificate x509Cert = checkCertificate(privateKeyEntry.getCertificate());
         try {
-            JavaAlgorithm.getJavaAlgorithmForHash(Algorithm.MLDSA65, privateKey.getParams().getName());
+            JavaAlgorithm.getJavaAlgorithmForHash(Algorithm.MLDSA65);
         } catch (RuntimeException e) {
             throw new UnrecoverableKeyException("Invalid params.");
         }
 
         PublicKey publicKey = x509Cert.getPublicKey();
         KeyPair keyPair = new KeyPair(publicKey, privateKey);
-        return createKeyWrapper(keyPair, x509Cert, loadCertificateChain(privateKeyEntry), KeyType.OKP, keyUse, privateKey.getParams().getName());
+        return createKeyWrapper(keyPair, x509Cert, loadCertificateChain(privateKeyEntry), KeyType.AKP, keyUse, null);
     }
 
     private KeyWrapper loadECKey(KeyStore keyStore, String keyAlias, KeyUse keyUse) throws GeneralSecurityException {

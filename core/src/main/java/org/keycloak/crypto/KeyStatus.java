@@ -35,5 +35,4 @@ public enum KeyStatus {
     public boolean isEnabled() {
         return this.equals(ACTIVE) || this.equals(PASSIVE);
     }
-
 }

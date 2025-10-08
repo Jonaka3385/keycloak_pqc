@@ -169,4 +169,21 @@ public class JWKBuilder {
     public JWK okp(Key key, KeyUse keyUse) {
         return EdEC_UTILS.okp(kid, algorithm, key, keyUse);
     }
+
+    public JWK akp(Key key) {
+        return akp(key, DEFAULT_PUBLIC_KEY_USE);
+    }
+
+    public JWK akp(Key key, KeyUse keyUse) {
+        String pubStr = key.toString();
+        AKPPublicJWK k = new AKPPublicJWK();
+
+        k.setKeyId(kid);
+        k.setKeyType(KeyType.AKP);
+        k.setAlgorithm(algorithm);
+        k.setPublicKeyUse(keyUse == null ? DEFAULT_PUBLIC_KEY_USE.getSpecName() : keyUse.getSpecName());
+        k.setPub(pubStr);
+
+        return k;
+    }
 }

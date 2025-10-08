@@ -36,9 +36,7 @@ import org.keycloak.common.util.BouncyIntegration;
 import org.keycloak.common.util.KeystoreUtil.KeystoreFormat;
 import org.keycloak.crypto.JavaAlgorithm;
 
-/**
- * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
- */
+
 public class PQCCryptoProvider implements CryptoProvider {
 
     private static final Logger log = Logger.getLogger(DefaultCryptoProvider.class);
@@ -51,12 +49,6 @@ public class PQCCryptoProvider implements CryptoProvider {
         // Make sure to instantiate this only once due it is expensive. And skip registration if already available in Java security providers (EG. due explicitly configured in java security file)
         Provider existingBcPqc = Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID);
         this.bcpqcProvider = existingBcPqc == null ? new BouncyCastlePQCProvider() : existingBcPqc;
-
-        //providers.put(CryptoConstants.MLDSA65, new BCMldsa65AlgorithmProvider());
-
-        providers.put(CryptoConstants.MLKEM512, new BCMlkemAlgorithmProvider());
-        providers.put(CryptoConstants.MLKEM768, new BCMlkemAlgorithmProvider());
-        providers.put(CryptoConstants.MLKEM1024, new BCMlkemAlgorithmProvider());
 
         if (existingBcPqc == null) {
             Security.addProvider(this.bcpqcProvider);
@@ -110,12 +102,10 @@ public class PQCCryptoProvider implements CryptoProvider {
         throw new UnsupportedOperationException("ECC not supported in PQC");
     }
 
-
     @Override
     public <T> T getOCSPProver(Class<T> clazz) {
         return clazz.cast(new BCOCSPProvider());
     }
-
 
     @Override
     public KeyPairGenerator getKeyPairGen(String algorithm) throws NoSuchAlgorithmException, NoSuchProviderException {
@@ -127,7 +117,6 @@ public class PQCCryptoProvider implements CryptoProvider {
     public KeyFactory getKeyFactory(String algorithm) throws NoSuchAlgorithmException, NoSuchProviderException {
         return KeyFactory.getInstance(algorithm, BouncyIntegration.PROVIDER);
     }
-
 
     @Override
     public Cipher getAesCbcCipher() throws UnsupportedOperationException {
@@ -160,11 +149,8 @@ public class PQCCryptoProvider implements CryptoProvider {
 
     @Override
     public CertStore getCertStore(CollectionCertStoreParameters certStoreParams) throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
-
         return CertStore.getInstance("Collection", certStoreParams, BouncyIntegration.PROVIDER);
-
     }
-
 
     @Override
     public CertPathBuilder getCertPathBuilder() throws NoSuchAlgorithmException, NoSuchProviderException {
@@ -174,7 +160,6 @@ public class PQCCryptoProvider implements CryptoProvider {
     @Override
     public Signature getSignature(String sigAlgName) throws NoSuchAlgorithmException, NoSuchProviderException {
         return Signature.getInstance(JavaAlgorithm.getJavaAlgorithm(sigAlgName), BouncyIntegration.PROVIDER);
-
     }
 
     @Override

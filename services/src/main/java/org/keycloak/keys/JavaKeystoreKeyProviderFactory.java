@@ -159,7 +159,7 @@ public class JavaKeystoreKeyProviderFactory implements KeyProviderFactory {
     // merge the algorithms supported for RSA and EC keys and provide them as one configuration property
     private static ProviderConfigProperty mergedAlgorithmProperties() {
         List<String> algorithms = Stream.of(
-                        List.of(Algorithm.AES, Algorithm.EdDSA),
+                        List.of(Algorithm.AES, Algorithm.EdDSA, Algorithm.MLDSA65),
                         List.of(Algorithm.ES256, Algorithm.ES384, Algorithm.ES512),
                         Attributes.HS_ALGORITHM_PROPERTY.getOptions(),
                         Attributes.RS_ALGORITHM_PROPERTY.getOptions(),

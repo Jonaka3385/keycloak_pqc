@@ -28,6 +28,7 @@ import org.keycloak.jose.jwk.JSONWebKeySet;
 import org.keycloak.jose.jwk.JWK;
 import org.keycloak.jose.jwk.JWKParser;
 import org.keycloak.jose.jwk.OKPPublicJWK;
+import org.keycloak.jose.jwk.AKPPublicJWK;
 import org.keycloak.jose.jwk.RSAPublicJWK;
 import org.keycloak.jose.jws.crypto.HashUtils;
 
@@ -54,6 +55,7 @@ public class JWKSUtils {
         JWK_THUMBPRINT_REQUIRED_MEMBERS.put(KeyType.RSA, new String[] { RSAPublicJWK.MODULUS, RSAPublicJWK.PUBLIC_EXPONENT });
         JWK_THUMBPRINT_REQUIRED_MEMBERS.put(KeyType.EC, new String[] { ECPublicJWK.CRV, ECPublicJWK.X, ECPublicJWK.Y });
         JWK_THUMBPRINT_REQUIRED_MEMBERS.put(KeyType.OKP, new String[] { OKPPublicJWK.CRV, OKPPublicJWK.X });
+        JWK_THUMBPRINT_REQUIRED_MEMBERS.put(KeyType.AKP, new String[] { AKPPublicJWK.ALGORITHM, AKPPublicJWK.PUB });
     }
 
     /**
