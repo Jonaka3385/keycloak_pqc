@@ -419,6 +419,7 @@ public class TestingOIDCEndpointsApplicationResource {
             case Algorithm.ES384:
             case Algorithm.ES512:
             case Algorithm.EdDSA:
+            case Algorithm.MLDSA65:
             case Algorithm.HS256:
             case Algorithm.HS384:
             case Algorithm.HS512:

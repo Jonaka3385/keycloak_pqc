@@ -769,6 +769,9 @@
            },
            "RS512":{
               "order":0
+           },
+           "ML-DSA-65":{
+              "order":0
            }
         }
      },
@@ -1536,7 +1539,10 @@
            },
            "RS512":{
               "order":0
-           }
+           },
+          "ML-DSA-65":{
+            "order":0
+          }
         }
      },
      "singleUseTokenStore":{

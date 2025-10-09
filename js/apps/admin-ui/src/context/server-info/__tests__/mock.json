@@ -533,7 +533,8 @@
         "ES512": { "order": 0 },
         "PS256": { "order": 0 },
         "PS512": { "order": 0 },
-        "RS512": { "order": 0 }
+        "RS512": { "order": 0 },
+        "ML-DSA-65": { "order": 0 }
       }
     },
     "clientValidation": {
@@ -935,7 +936,8 @@
         "ES512": { "order": 0 },
         "PS256": { "order": 0 },
         "PS512": { "order": 0 },
-        "RS512": { "order": 0 }
+        "RS512": { "order": 0 },
+        "ML-DSA-65": { "order": 0 }
       }
     },
     "singleUseTokenStore": {
