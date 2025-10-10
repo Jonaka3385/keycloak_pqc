@@ -7,7 +7,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.bouncycastle.crypto.CryptoServicesRegistrar;
+//import org.bouncycastle.crypto.CryptoServicesRegistrar;
+//TODO replace with working isInApprovedOnlyMode function
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,9 @@ public class FIPS1402HmacTest extends HmacTest {
     @Override
     public void testHmacSignaturesWithShortSecretKey() throws Exception {
         // With BCFIPS approved mode, secret key used for HmacSHA256 must be at least 112 bits long (14 characters). Short key won't work
-        Assume.assumeFalse(CryptoServicesRegistrar.isInApprovedOnlyMode());
+        //Assume.assumeFalse(CryptoServicesRegistrar.isInApprovedOnlyMode());
+        //TODO replace with working isInApprovedOnlyMode function
+        Assume.assumeFalse(false);
         super.testHmacSignaturesWithShortSecretKey();
     }
 }

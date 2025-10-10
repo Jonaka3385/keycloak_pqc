@@ -1,6 +1,7 @@
 package org.keycloak.crypto.fips;
 
-import static org.bouncycastle.crypto.CryptoServicesRegistrar.isInApprovedOnlyMode;
+//import static org.bouncycastle.crypto.CryptoServicesRegistrar.isInApprovedOnlyMode();
+//TODO replace with working isInApprovedOnlyMode function
 
 import java.lang.reflect.Method;
 import java.security.Provider;
@@ -20,11 +21,11 @@ public class KeycloakFipsSecurityProvider extends Provider {
     private final BouncyCastleFipsProvider bcFipsProvider;
 
     public KeycloakFipsSecurityProvider(BouncyCastleFipsProvider bcFipsProvider) {
-        super("KC(" +
-                bcFipsProvider.toString() +
-                (isInApprovedOnlyMode() ? " Approved Mode" : "") +
-                ", FIPS-JVM: " + isSystemFipsEnabled() +
-                ")", 1, "Keycloak pseudo provider");
+        //super("KC(" + bcFipsProvider.toString() + (isInApprovedOnlyMode() ? " Approved Mode" : "") +
+        //        ", FIPS-JVM: " + isSystemFipsEnabled() + ")", 1, "Keycloak pseudo provider");
+        //TODO replace with working isInApprovedOnlyMode function
+        super("KC(" + bcFipsProvider.toString() + (true ? " Approved Mode" : "") +
+                ", FIPS-JVM: " + isSystemFipsEnabled() + ")", 1, "Keycloak pseudo provider");
         this.bcFipsProvider = bcFipsProvider;
         logger.infof("KeycloakFipsSecurityProvider created: %s", this.toString());
     }

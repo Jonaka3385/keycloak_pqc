@@ -74,6 +74,11 @@
             <artifactId>bctls-fips</artifactId>
             <version>${bouncycastle.bctls-fips.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcutil-fips</artifactId>
+            <version>${bouncycastle.bcutilfips.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.logging</groupId>

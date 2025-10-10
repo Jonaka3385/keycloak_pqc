@@ -715,6 +715,7 @@
                                                 <include>bc-fips-*</include>
                                                 <include>bctls-fips-*</include>
                                                 <include>bcpkix-fips-*</include>
+                                                <include>bcutil-fips-*</include>
                                             </includes>
                                         </resource>
                                     </resources>
