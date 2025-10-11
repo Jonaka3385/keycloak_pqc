@@ -55,7 +55,7 @@ public class AsymmetricSignatureSignerContext implements SignatureSignerContext 
     public byte[] sign(byte[] data) throws SignatureException {
         try {
             Signature signature;
-            if (JavaAlgorithm.isMldsaJavaAlgorithm(key.getAlgorithm())) {
+            if (JavaAlgorithm.isPQCJavaAlgorithm(key.getAlgorithm())) {
                 signature = Signature.getInstance(key.getAlgorithm(), "BCPQC");
             } else {
                 signature = Signature.getInstance(JavaAlgorithm.getJavaAlgorithm(key.getAlgorithmOrDefault(), key.getCurve()));

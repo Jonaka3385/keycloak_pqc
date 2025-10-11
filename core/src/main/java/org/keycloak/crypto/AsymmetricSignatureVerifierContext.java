@@ -64,7 +64,7 @@ public class AsymmetricSignatureVerifierContext implements SignatureVerifierCont
 
     private Signature getSignature() throws NoSuchAlgorithmException, NoSuchProviderException {
         try {
-            if (JavaAlgorithm.isMldsaJavaAlgorithm(key.getAlgorithm())) {
+            if (JavaAlgorithm.isPQCJavaAlgorithm(key.getAlgorithm())) {
                 return Signature.getInstance(key.getAlgorithm(), "BCPQC");
             } else {
                 return Signature.getInstance(JavaAlgorithm.getJavaAlgorithm(key.getAlgorithmOrDefault(), key.getCurve()));

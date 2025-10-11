@@ -27,8 +27,10 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Security;
 import java.security.Signature;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.keycloak.common.util.KeyUtils;
@@ -43,6 +45,12 @@ import org.keycloak.util.JsonSerialization;
  * @author <a href="mailto:takashi.norimatsu.ws@hitachi.com">Takashi Norimatsu</a>
  */
 public class ServerJWKTest {
+
+    static {
+        if (Security.getProvider("BCPQC") == null) {
+            Security.addProvider(new BouncyCastlePQCProvider());
+        }
+    }
 
     @ClassRule
     public static CryptoInitRule cryptoInitRule = new CryptoInitRule();
@@ -111,17 +119,26 @@ public class ServerJWKTest {
     }
 
     private byte[] sign(byte[] data, String javaAlgorithm, PrivateKey key) throws Exception {
-        Signature signature = Signature.getInstance(javaAlgorithm);
+        Signature signature;
+        if ( JavaAlgorithm.isPQCJavaAlgorithm(javaAlgorithm) ) {
+            signature = Signature.getInstance(javaAlgorithm, "BCPQC");
+        } else {
+            signature = Signature.getInstance(javaAlgorithm);
+        }
         signature.initSign(key);
         signature.update(data);
         return signature.sign();
     }
 
     private boolean verify(byte[] data, byte[] signature, String javaAlgorithm, PublicKey key) throws Exception {
-        Signature verifier = Signature.getInstance(javaAlgorithm);
+        Signature verifier;
+        if ( JavaAlgorithm.isPQCJavaAlgorithm(javaAlgorithm) ) {
+            verifier = Signature.getInstance(javaAlgorithm, "BCPQC");
+        } else {
+            verifier = Signature.getInstance(javaAlgorithm);
+        }
         verifier.initVerify(key);
         verifier.update(data);
         return verifier.verify(signature);
     }
-
 }

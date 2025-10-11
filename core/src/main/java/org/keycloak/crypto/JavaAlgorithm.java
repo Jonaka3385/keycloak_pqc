@@ -162,6 +162,14 @@ public class JavaAlgorithm {
         return getJavaAlgorithm(algorithm).contains("ML-DSA");
     }
 
+    public static boolean isMlkemJavaAlgorithm(String algorithm) {
+        return getJavaAlgorithm(algorithm).contains("ML-KEM");
+    }
+
+    public static boolean isPQCJavaAlgorithm(String algorithm) {
+        return isMldsaJavaAlgorithm(algorithm) || isMlkemJavaAlgorithm(algorithm);
+    }
+
     public static boolean isHMACJavaAlgorithm(String algorithm) {
         return getJavaAlgorithm(algorithm).contains("HMAC");
     }
