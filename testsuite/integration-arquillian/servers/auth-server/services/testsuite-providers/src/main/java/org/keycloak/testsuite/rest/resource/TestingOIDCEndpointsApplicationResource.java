@@ -175,9 +175,11 @@ public class TestingOIDCEndpointsApplicationResource {
                     keyUse = KeyUse.ENC;
                     keyPair = KeyUtils.generateRsaKeyPair(2048);
                     break;
+                case Algorithm.MLDSA44:
                 case Algorithm.MLDSA65:
+                case Algorithm.MLDSA87:
                     keyType = KeyType.AKP;
-                    keyPair = generateMldsa65KeyPair();
+                    keyPair = generateMldsaKeyPair(jwaAlgorithm);
                     break;
                 default :
                     throw new RuntimeException("Unsupported signature algorithm");
@@ -216,10 +218,10 @@ public class TestingOIDCEndpointsApplicationResource {
         return keyPair;
     }
 
-    private KeyPair generateMldsa65KeyPair() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+    private KeyPair generateMldsaKeyPair(String algorithm) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         KeyPairGenerator keyGen;
         try {
-            keyGen = KeyPairGenerator.getInstance("ML-DSA-65", "BCPQC");
+            keyGen = KeyPairGenerator.getInstance(algorithm, "BCPQC");
         } catch (NoSuchProviderException e) {
             throw new RuntimeException(e);
         }
@@ -419,7 +421,9 @@ public class TestingOIDCEndpointsApplicationResource {
             case Algorithm.ES384:
             case Algorithm.ES512:
             case Algorithm.EdDSA:
+            case Algorithm.MLDSA44:
             case Algorithm.MLDSA65:
+            case Algorithm.MLDSA87:
             case Algorithm.HS256:
             case Algorithm.HS384:
             case Algorithm.HS512:

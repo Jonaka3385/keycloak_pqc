@@ -21,6 +21,7 @@ import org.keycloak.common.util.Base64;
 import org.keycloak.common.util.MultivaluedHashMap;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.component.ComponentValidationException;
+import org.keycloak.crypto.Algorithm;
 import org.keycloak.crypto.KeyUse;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
@@ -29,26 +30,26 @@ import org.keycloak.provider.ProviderConfigProperty;
 import java.security.KeyPair;
 import java.util.List;
 
-public class GeneratedMldsa65KeyProviderFactory extends AbstractMldsa65KeyProviderFactory {
+public class GeneratedMldsaKeyProviderFactory extends AbstractMldsaKeyProviderFactory {
 
-    private static final Logger logger = Logger.getLogger(GeneratedMldsa65KeyProviderFactory.class);
+    private static final Logger logger = Logger.getLogger(GeneratedMldsaKeyProviderFactory.class);
 
-    public static final String ID = "mldsa65-generated";
+    public static final String ID = "mldsa-generated";
 
-    private static final String HELP_TEXT = "Generates ML-DSA-65 keys";
+    private static final String HELP_TEXT = "Generates ML-DSA keys";
 
-    private static final List<ProviderConfigProperty> CONFIG_PROPERTIES = AbstractMldsa65KeyProviderFactory.configurationBuilder()
-            .property(MLDSA65_PROPERTY)
+    private static final List<ProviderConfigProperty> CONFIG_PROPERTIES = AbstractMldsaKeyProviderFactory.configurationBuilder()
+            .property(MLDSA_PROPERTY)
             .build();
 
     @Override
     public KeyProvider create(KeycloakSession session, ComponentModel model) {
-        return new GeneratedMldsa65KeyProvider(session.getContext().getRealm(), model);
+        return new GeneratedMldsaKeyProvider(session.getContext().getRealm(), model);
     }
 
     @Override
     public boolean createFallbackKeys(KeycloakSession session, KeyUse keyUse, String algorithm) {
-        if (keyUse.equals(KeyUse.SIG) && algorithm.equals(ALGORITHM)) {
+        if (keyUse.equals(KeyUse.SIG)) {
             RealmModel realm = session.getContext().getRealm();
 
             ComponentModel generated = new ComponentModel();
@@ -94,12 +95,22 @@ public class GeneratedMldsa65KeyProviderFactory extends AbstractMldsa65KeyProvid
 
     private void generateKeys(ComponentModel model) {
         KeyPair keyPair;
+        int keySize;
+        if (model.get(Attributes.ALGORITHM_KEY).equals(Algorithm.MLDSA44)) {
+            keySize = 44;
+        } else if (model.get(Attributes.ALGORITHM_KEY).equals(Algorithm.MLDSA65)) {
+            keySize = 65;
+        } else if(model.get(Attributes.ALGORITHM_KEY).equals(Algorithm.MLDSA87)) {
+            keySize = 87;
+        } else {
+            throw new IllegalStateException("No known ML-DSA Algorithm: " + model.get(Attributes.ALGORITHM_KEY));
+        }
         try {
-            keyPair = generateMldsa65KeyPair();
-            model.put(MLDSA65_PRIVATE_KEY_KEY, Base64.encodeBytes(keyPair.getPrivate().getEncoded()));
-            model.put(MLDSA65_PUBLIC_KEY_KEY, Base64.encodeBytes(keyPair.getPublic().getEncoded()));
+            keyPair = generateMldsaKeyPair(keySize);
+            model.put(MLDSA_PRIVATE_KEY_KEY, Base64.encodeBytes(keyPair.getPrivate().getEncoded()));
+            model.put(MLDSA_PUBLIC_KEY_KEY, Base64.encodeBytes(keyPair.getPublic().getEncoded()));
         } catch (Throwable t) {
-            throw new ComponentValidationException("Failed to generate ML-DSA-65 keys", t);
+            throw new ComponentValidationException("Failed to generate ML-DSA keys", t);
         }
     }
 }

@@ -362,8 +362,14 @@ public class WebAuthnRegister implements RequiredActionProvider, CredentialRegis
             case Algorithm.RS512 :
                 algs.add(COSEAlgorithmIdentifier.RS512.getValue());
                 break;
+            case Algorithm.MLDSA44 :
+                algs.add(COSEAlgorithmIdentifierMLDSA.getValue(44));
+                break;  // TODO: Replace with webauthn4j when available
             case Algorithm.MLDSA65 :
                 algs.add(COSEAlgorithmIdentifierMLDSA.getValue(65));
+                break;  // TODO: Replace with webauthn4j when available
+            case Algorithm.MLDSA87 :
+                algs.add(COSEAlgorithmIdentifierMLDSA.getValue(87));
                 break;  // TODO: Replace with webauthn4j when available
             case Algorithm.Ed25519:
                 algs.add(COSEAlgorithmIdentifier.EdDSA.getValue());

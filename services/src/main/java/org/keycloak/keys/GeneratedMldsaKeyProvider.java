@@ -29,33 +29,32 @@ import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-public class GeneratedMldsa65KeyProvider extends AbstractMldsa65KeyProvider {
-    private static final Logger logger = Logger.getLogger(GeneratedMldsa65KeyProvider.class);
+public class GeneratedMldsaKeyProvider extends AbstractMldsaKeyProvider {
+    private static final Logger logger = Logger.getLogger(GeneratedMldsaKeyProvider.class);
 
-    public GeneratedMldsa65KeyProvider(RealmModel realm, ComponentModel model) {
+    public GeneratedMldsaKeyProvider(RealmModel realm, ComponentModel model) {
         super(realm, model);
     }
 
     @Override
     protected KeyWrapper loadKey(RealmModel realm, ComponentModel model) {
-        String privateMldsa65KeyBase64Encoded = model.getConfig().getFirst(GeneratedMldsa65KeyProviderFactory.MLDSA65_PRIVATE_KEY_KEY);
-        String publicMldsa65KeyBase64Encoded = model.getConfig().getFirst(GeneratedMldsa65KeyProviderFactory.MLDSA65_PUBLIC_KEY_KEY);
+        String privateMldsaKeyBase64Encoded = model.getConfig().getFirst(GeneratedMldsaKeyProviderFactory.MLDSA_PRIVATE_KEY_KEY);
+        String publicMldsaKeyBase64Encoded = model.getConfig().getFirst(GeneratedMldsaKeyProviderFactory.MLDSA_PUBLIC_KEY_KEY);
 
         try {
-            PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(Base64.decode(privateMldsa65KeyBase64Encoded));
-            KeyFactory kf = KeyFactory.getInstance(ALGORITHM);
+            PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(Base64.decode(privateMldsaKeyBase64Encoded));
+            KeyFactory kf = KeyFactory.getInstance(algorithm);
             PrivateKey decodedPrivateKey = kf.generatePrivate(privateKeySpec);
 
-            X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(Base64.decode(publicMldsa65KeyBase64Encoded));
+            X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(Base64.decode(publicMldsaKeyBase64Encoded));
             PublicKey decodedPublicKey = kf.generatePublic(publicKeySpec);
 
             KeyPair keyPair = new KeyPair(decodedPublicKey, decodedPrivateKey);
 
             return createKeyWrapper(keyPair);
         } catch (Exception e) {
-            logger.warnf("Exception at decodeMldsa65PublicKey. %s", e.toString());
+            logger.warnf("Exception at decodeMldsaPublicKey. %s", e.toString());
             return null;
         }
-
     }
 }

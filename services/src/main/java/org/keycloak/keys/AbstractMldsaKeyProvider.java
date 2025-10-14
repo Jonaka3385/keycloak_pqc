@@ -28,7 +28,7 @@ import org.keycloak.models.RealmModel;
 import java.security.KeyPair;
 import java.util.stream.Stream;
 
-public abstract class AbstractMldsa65KeyProvider implements KeyProvider {
+public abstract class AbstractMldsaKeyProvider implements KeyProvider {
 
     private final KeyStatus status;
 
@@ -36,11 +36,13 @@ public abstract class AbstractMldsa65KeyProvider implements KeyProvider {
 
     private final KeyWrapper key;
 
-    protected static final String ALGORITHM = Algorithm.MLDSA65;
+    protected final String algorithm;
 
-    public AbstractMldsa65KeyProvider(RealmModel realm, ComponentModel model) {
+    public AbstractMldsaKeyProvider(RealmModel realm, ComponentModel model) {
         this.model = model;
         this.status = KeyStatus.from(model.get(Attributes.ACTIVE_KEY, true), model.get(Attributes.ENABLED_KEY, true));
+
+        this.algorithm = model.get(Attributes.ALGORITHM_KEY);
 
         if (model.hasNote(KeyWrapper.class.getName())) {
             key = model.getNote(KeyWrapper.class.getName());
@@ -66,7 +68,7 @@ public abstract class AbstractMldsa65KeyProvider implements KeyProvider {
         key.setKid(KeyUtils.createKeyId(keyPair.getPublic()));
         key.setUse(KeyUse.SIG);
         key.setType(KeyType.AKP);
-        key.setAlgorithm(ALGORITHM);
+        key.setAlgorithm(algorithm);
         key.setStatus(status);
         key.setPrivateKey(keyPair.getPrivate());
         key.setPublicKey(keyPair.getPublic());

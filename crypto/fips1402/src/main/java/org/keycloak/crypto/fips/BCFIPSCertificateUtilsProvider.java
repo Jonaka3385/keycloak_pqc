@@ -208,7 +208,9 @@ public class BCFIPSCertificateUtilsProvider implements CertificateUtilsProvider{
                 }
                 case JavaAlgorithm.Ed25519:
                 case JavaAlgorithm.Ed448:
-                case JavaAlgorithm.MLDSA65: {
+                case JavaAlgorithm.MLDSA44:
+                case JavaAlgorithm.MLDSA65:
+                case JavaAlgorithm.MLDSA87: {
                     signerBuilder = new JcaContentSignerBuilder(privateKey.getAlgorithm())
                             .setProvider(BouncyIntegration.PROVIDER);
                     break;

@@ -30,15 +30,13 @@ import java.security.KeyPairGenerator;
 
 import static org.keycloak.provider.ProviderConfigProperty.LIST_TYPE;
 
-public abstract class AbstractMldsa65KeyProviderFactory implements KeyProviderFactory {
+public abstract class AbstractMldsaKeyProviderFactory implements KeyProviderFactory {
 
-    protected static final String ALGORITHM = Algorithm.MLDSA65;
-    protected static final String MLDSA65_PRIVATE_KEY_KEY = "mldsa65PrivateKey";
-    protected static final String MLDSA65_PUBLIC_KEY_KEY = "mldsa65PublicKey";
+    protected static final String MLDSA_PRIVATE_KEY_KEY = "mldsaPrivateKey";
+    protected static final String MLDSA_PUBLIC_KEY_KEY = "mldsaPublicKey";
 
-    protected static ProviderConfigProperty MLDSA65_PROPERTY = new ProviderConfigProperty(ALGORITHM,
-            "ML-DSA-65", "Generates ML-DSA-65 keys", LIST_TYPE,
-            ALGORITHM);
+    protected static ProviderConfigProperty MLDSA_PROPERTY = new ProviderConfigProperty("ML-DSA", "Generates ML-DSA keys",
+            LIST_TYPE, Algorithm.MLDSA44, Algorithm.MLDSA65, Algorithm.MLDSA87);
 
     public final static ProviderConfigurationBuilder configurationBuilder() {
         return ProviderConfigurationBuilder.create()
@@ -55,9 +53,19 @@ public abstract class AbstractMldsa65KeyProviderFactory implements KeyProviderFa
                 .checkBoolean(Attributes.ACTIVE_PROPERTY, false);
     }
 
-    public static KeyPair generateMldsa65KeyPair() {
+    public static KeyPair generateMldsaKeyPair(int keySize) {
+        String alg;
+        if (keySize == 44) {
+            alg = Algorithm.MLDSA44;
+        } else if (keySize == 65) {
+            alg = Algorithm.MLDSA65;
+        } else if (keySize == 87) {
+            alg = Algorithm.MLDSA87;
+        } else {
+            throw new IllegalStateException("Unknown key size: " + keySize);
+        }
         try {
-            KeyPairGenerator keyGen = KeyPairGenerator.getInstance(ALGORITHM);
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance(alg);
             return keyGen.generateKeyPair();
         } catch (Exception e) {
             throw new RuntimeException(e);
