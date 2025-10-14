@@ -92,7 +92,7 @@ public class BCFIPSCertificateUtilsProvider implements CertificateUtilsProvider{
             X500Name subjectDN = new X500Name("CN=" + subject);
 
             // Serial Number
-            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+            SecureRandom random = new SecureRandom();
             BigInteger serialNumber = BigInteger.valueOf(Math.abs(random.nextInt()));
 
             // Validity
@@ -207,10 +207,7 @@ public class BCFIPSCertificateUtilsProvider implements CertificateUtilsProvider{
                     break;
                 }
                 case JavaAlgorithm.Ed25519:
-                case JavaAlgorithm.Ed448:
-                case JavaAlgorithm.MLDSA44:
-                case JavaAlgorithm.MLDSA65:
-                case JavaAlgorithm.MLDSA87: {
+                case JavaAlgorithm.Ed448: {
                     signerBuilder = new JcaContentSignerBuilder(privateKey.getAlgorithm())
                             .setProvider(BouncyIntegration.PROVIDER);
                     break;

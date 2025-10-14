@@ -61,23 +61,15 @@
 
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcpkix-fips</artifactId>
-            <version>${bouncycastle.pkixfips.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
             <artifactId>bc-fips</artifactId>
-            <version>${bouncycastle.bcfips.version}</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bctls-fips</artifactId>
-            <version>${bouncycastle.bctls-fips.version}</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcutil-fips</artifactId>
-            <version>${bouncycastle.bcutilfips.version}</version>
+            <artifactId>bcpkix-fips</artifactId>
         </dependency>
 
         <dependency>

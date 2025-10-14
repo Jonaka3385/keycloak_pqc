@@ -14,7 +14,7 @@ import org.keycloak.jose.jwe.alg.JWEAlgorithmProvider;
 import org.keycloak.jose.jwe.enc.JWEEncryptionProvider;
 
 /**
- * Variant of org.keycloak.jose.jwe.alg.AesKeyWrapAlgorithmProvider based on FIPS
+ * Variant of {@link org.keycloak.jose.jwe.alg.AesKeyWrapAlgorithmProvider} based on FIPS
  */
 public class FIPSAesKeyWrapAlgorithmProvider implements JWEAlgorithmProvider {
 

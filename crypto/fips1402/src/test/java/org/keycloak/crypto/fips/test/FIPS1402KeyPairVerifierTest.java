@@ -1,7 +1,6 @@
 package org.keycloak.crypto.fips.test;
 
-//import org.bouncycastle.crypto.CryptoServicesRegistrar;
-//TODO replace with working isInApprovedOnlyMode function
+import org.bouncycastle.crypto.CryptoServicesRegistrar;
 import org.bouncycastle.crypto.fips.FipsUnapprovedOperationError;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,27 +25,21 @@ public class FIPS1402KeyPairVerifierTest extends KeyPairVerifierTest {
     @Test
     public void verifyWith1024PrivateKeyInTraditionalRSAFormat() throws Exception {
         // Signature generation with RSA 1024 key works just in non-approved mode
-        //Assume.assumeFalse(CryptoServicesRegistrar.isInApprovedOnlyMode());
-        //TODO replace with working isInApprovedOnlyMode function
-        Assume.assumeFalse(false);
+        Assume.assumeFalse(CryptoServicesRegistrar.isInApprovedOnlyMode());
         super.verifyWith1024PrivateKeyInTraditionalRSAFormat();
     }
 
     @Test
     public void verifyWith1024PrivateKeyInPKCS8Format() throws Exception {
         // Signature generation with RSA 1024 key works just in non-approved mode
-        //Assume.assumeFalse(CryptoServicesRegistrar.isInApprovedOnlyMode());
-        //TODO replace with working isInApprovedOnlyMode function
-        Assume.assumeFalse(false);
+        Assume.assumeFalse(CryptoServicesRegistrar.isInApprovedOnlyMode());
         super.verifyWith1024PrivateKeyInPKCS8Format();
     }
 
     @Test
     public void verifyWith1024PrivateKeyInTraditionalRSAFormatShouldFail() throws Exception {
         // Signature generation with RSA 1024 key works just in non-approved mode
-        //Assume.assumeTrue(CryptoServicesRegistrar.isInApprovedOnlyMode());
-        //TODO replace with working isInApprovedOnlyMode function
-        Assume.assumeTrue(true);
+        Assume.assumeTrue(CryptoServicesRegistrar.isInApprovedOnlyMode());
         try {
             super.verifyWith1024PrivateKeyInTraditionalRSAFormat();
             Assert.fail("Should not successfully generate signature with RSA 1024 key in BC approved mode");
@@ -58,9 +51,7 @@ public class FIPS1402KeyPairVerifierTest extends KeyPairVerifierTest {
     @Test
     public void verifyWith1024PrivateKeyInPKCS8FormatShouldFail() throws Exception {
         // Signature generation with RSA 1024 key works just in non-approved mode
-        //Assume.assumeTrue(CryptoServicesRegistrar.isInApprovedOnlyMode());
-        //TODO replace with working isInApprovedOnlyMode function
-        Assume.assumeTrue(true);
+        Assume.assumeTrue(CryptoServicesRegistrar.isInApprovedOnlyMode());
         try {
             super.verifyWith1024PrivateKeyInPKCS8Format();
             Assert.fail("Should not successfully generate signature with RSA 1024 key in BC approved mode");

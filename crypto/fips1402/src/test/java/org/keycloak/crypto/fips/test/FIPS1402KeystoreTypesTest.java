@@ -3,8 +3,7 @@ package org.keycloak.crypto.fips.test;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//import org.bouncycastle.crypto.CryptoServicesRegistrar;
-//TODO replace with working isInApprovedOnlyMode function
+import org.bouncycastle.crypto.CryptoServicesRegistrar;
 import org.hamcrest.Matchers;
 import org.junit.Assume;
 import org.junit.Before;
@@ -33,9 +32,7 @@ public class FIPS1402KeystoreTypesTest {
 
     @Test
     public void testKeystoreFormatsInNonApprovedMode() {
-        //Assume.assumeFalse(CryptoServicesRegistrar.isInApprovedOnlyMode());
-        //TODO replace with working isInApprovedOnlyMode function
-        Assume.assumeFalse(false);
+        Assume.assumeFalse(CryptoServicesRegistrar.isInApprovedOnlyMode());
         Set<KeystoreUtil.KeystoreFormat> supportedKeystoreFormats = CryptoIntegration.getProvider().getSupportedKeyStoreTypes().collect(Collectors.toSet());
         assertThat(supportedKeystoreFormats, Matchers.containsInAnyOrder(
                 KeystoreUtil.KeystoreFormat.PKCS12,
@@ -45,9 +42,7 @@ public class FIPS1402KeystoreTypesTest {
     // BCFIPS approved mode supports only BCFKS. No JKS nor PKCS12 support for keystores
     @Test
     public void testKeystoreFormatsInApprovedMode() {
-        //Assume.assumeTrue(CryptoServicesRegistrar.isInApprovedOnlyMode());
-        //TODO replace with working isInApprovedOnlyMode function
-        Assume.assumeTrue(true);
+        Assume.assumeTrue(CryptoServicesRegistrar.isInApprovedOnlyMode());
         Set<KeystoreUtil.KeystoreFormat> supportedKeystoreFormats = CryptoIntegration.getProvider().getSupportedKeyStoreTypes().collect(Collectors.toSet());
         assertThat(supportedKeystoreFormats, Matchers.containsInAnyOrder(
                 KeystoreUtil.KeystoreFormat.BCFKS));

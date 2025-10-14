@@ -1,7 +1,6 @@
 package org.keycloak.crypto.fips.test;
 
-//import org.bouncycastle.crypto.CryptoServicesRegistrar;
-//TODO replace with working isInApprovedOnlyMode function
+import org.bouncycastle.crypto.CryptoServicesRegistrar;
 import org.bouncycastle.crypto.fips.FipsUnapprovedOperationError;
 import org.jboss.logging.Logger;
 import org.junit.Assert;
@@ -45,18 +44,14 @@ public class FIPS1402Pbkdf2PasswordPaddingTest {
 
     @BeforeClass
     public static void checkBcFipsApproved() {
-        //defaultBcFipsApprovedMode = CryptoServicesRegistrar.isInApprovedOnlyMode();
-        //TODO replace with working isInApprovedOnlyMode function
-        defaultBcFipsApprovedMode = true;
+        defaultBcFipsApprovedMode = CryptoServicesRegistrar.isInApprovedOnlyMode();
     }
 
     @Before
     public void before() {
         // Run this test just if java is in FIPS mode
         Assume.assumeTrue("Java is not in FIPS mode. Skipping the test.", Environment.isJavaInFipsMode());
-        //Assert.assertEquals(defaultBcFipsApprovedMode, CryptoServicesRegistrar.isInApprovedOnlyMode());
-        //TODO replace with working isInApprovedOnlyMode function
-        Assert.assertEquals(defaultBcFipsApprovedMode, true);
+        Assert.assertEquals(defaultBcFipsApprovedMode, CryptoServicesRegistrar.isInApprovedOnlyMode());
     }
 
     @Test
@@ -108,20 +103,13 @@ public class FIPS1402Pbkdf2PasswordPaddingTest {
         PasswordHashProvider pbkdf2HashProvider = factory.create(null);
 
         PasswordCredentialModel passwordCred = pbkdf2HashProvider.encodedCredential(password, ITERATIONS);
-        //logger.infof("After password credential created. BC FIPS approved mode: %b, password: %s", CryptoServicesRegistrar.isInApprovedOnlyMode(), password);
-        //TODO replace with working isInApprovedOnlyMode function
-        logger.infof("After password credential created. BC FIPS approved mode: %b, password: %s", true, password);
+        logger.infof("After password credential created. BC FIPS approved mode: %b, password: %s", CryptoServicesRegistrar.isInApprovedOnlyMode(), password);
 
-        /*
         if (shouldEnableApprovedModeForVerification) {
             CryptoServicesRegistrar.setApprovedOnlyMode(true);
-            //TODO replace with working setApprovedOnlyMode function
         }
-         */
 
-        //logger.infof("Before password verification. BC FIPS approved mode: %b, password: %s", CryptoServicesRegistrar.isInApprovedOnlyMode(), password);
-        //TODO replace with working isInApprovedOnlyMode function
-        logger.infof("Before password verification. BC FIPS approved mode: %b, password: %s", true, password);
+        logger.infof("Before password verification. BC FIPS approved mode: %b, password: %s", CryptoServicesRegistrar.isInApprovedOnlyMode(), password);
         assertThat(true, is(pbkdf2HashProvider.verify(password, passwordCred)));
     }
 

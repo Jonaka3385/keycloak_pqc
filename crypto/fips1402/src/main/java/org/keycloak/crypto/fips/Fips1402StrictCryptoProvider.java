@@ -6,7 +6,7 @@ import org.bouncycastle.crypto.CryptoServicesRegistrar;
  * <p>A {@link FIPS1402Provider} that forces BC to run in FIPS approve mode by default.
  *
  * <p>In order to set the default mode the {@code org.bouncycastle.fips.approved_only} must be set. Otherwise,
- * calling {@link CryptoServicesRegistrar setApprovedOnlyMode(boolean)} the mode is set on a per thread-basis and does not work
+ * calling {@link CryptoServicesRegistrar#setApprovedOnlyMode(boolean)} the mode is set on a per thread-basis and does not work
  * well when handling requests using multiple threads.
  */
 public class Fips1402StrictCryptoProvider extends FIPS1402Provider {

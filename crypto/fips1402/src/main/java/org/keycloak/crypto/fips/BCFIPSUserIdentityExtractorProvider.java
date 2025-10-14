@@ -19,7 +19,6 @@
 package org.keycloak.crypto.fips;
 
 import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.ASN1IA5String;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Sequence;
@@ -165,8 +164,7 @@ public class BCFIPSUserIdentityExtractorProvider  extends UserIdentityExtractorP
                                         tempOid = oid.getId();
 
                                         ASN1Encodable principalNameEncoded = asn1Sequence.getObjectAt(1);
-                                        ASN1IA5String ia5 = ASN1IA5String.getInstance(principalNameEncoded);
-                                        DERUTF8String principalName = new DERUTF8String(ia5.getString());
+                                        DERUTF8String principalName = DERUTF8String.getInstance(unwrap(principalNameEncoded));
 
                                         tempOtherName = principalName.getString();
 
@@ -203,7 +201,7 @@ public class BCFIPSUserIdentityExtractorProvider  extends UserIdentityExtractorP
         private ASN1Encodable unwrap(ASN1Encodable encodable) {
             while (encodable instanceof ASN1TaggedObject) {
                 ASN1TaggedObject taggedObj = (ASN1TaggedObject) encodable;
-                encodable = taggedObj.getBaseObject();
+                encodable = taggedObj.getObject();
             }
 
             return encodable;

@@ -2,8 +2,7 @@ package org.keycloak.crypto.fips.test;
 
 import java.security.SecureRandom;
 
-//import org.bouncycastle.crypto.CryptoServicesRegistrar;
-//TODO replace with working isInApprovedOnlyMode function
+import org.bouncycastle.crypto.CryptoServicesRegistrar;
 import org.bouncycastle.crypto.fips.FipsStatus;
 import org.jboss.logging.Logger;
 import org.junit.Assert;
@@ -35,22 +34,17 @@ public class FIPS1402SecureRandomTest {
     public void testSecureRandom() throws Exception {
         logger.info(CryptoIntegration.dumpJavaSecurityProviders());
 
-        //logger.infof("BC FIPS approved mode: %b, FIPS Status: %s", CryptoServicesRegistrar.isInApprovedOnlyMode(), FipsStatus.getStatusMessage());
-        //TODO replace with working isInApprovedOnlyMode function
-        logger.infof("BC FIPS approved mode: %b, FIPS Status: %s", true, FipsStatus.getStatusMessage());
+        logger.infof("BC FIPS approved mode: %b, FIPS Status: %s", CryptoServicesRegistrar.isInApprovedOnlyMode(), FipsStatus.getStatusMessage());
 
         SecureRandom sc1 = new SecureRandom();
         logger.infof(dumpSecureRandom("new SecureRandom()", sc1));
+        Assert.assertEquals("DEFAULT", sc1.getAlgorithm());
+        Assert.assertEquals("BCFIPS", sc1.getProvider().getName());
 
         SecureRandom sc2 = SecureRandom.getInstance("DEFAULT", "BCFIPS");
         logger.infof(dumpSecureRandom("SecureRandom.getInstance(\"DEFAULT\", \"BCFIPS\")", sc2));
         Assert.assertEquals("DEFAULT", sc2.getAlgorithm());
         Assert.assertEquals("BCFIPS", sc2.getProvider().getName());
-
-        SecureRandom sc3 = SecureRandom.getInstance("SHA1PRNG");
-        logger.infof(dumpSecureRandom("SecureRandom.getInstance(\"SHA1PRNG\")", sc3));
-        Assert.assertEquals("SHA1PRNG", sc3.getAlgorithm());
-        Assert.assertEquals("BCFIPS", sc3.getProvider().getName());
     }
 
 
