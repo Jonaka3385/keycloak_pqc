@@ -14,21 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.keycloak.crypto;
 
+import org.keycloak.common.VerificationException;
 import org.keycloak.models.KeycloakSession;
 
-public class MLDSA65SignatureProviderFactory implements SignatureProviderFactory {
+public class ServerMLDSASignatureVerifierContext extends  AsymmetricSignatureVerifierContext {
 
-    public static final String ID = Algorithm.MLDSA65;
-
-    @Override
-    public String getId() {
-        return ID;
+    public ServerMLDSASignatureVerifierContext(KeycloakSession session, String kid, String algorithm) throws VerificationException {
+        super(ServerAsymmetricSignatureVerifierContext.getKey(session, kid, algorithm));
     }
 
-    @Override
-    public SignatureProvider create(KeycloakSession session) {
-        return new MLDSASignatureProvider(session, Algorithm.MLDSA65);
+    public ServerMLDSASignatureVerifierContext(KeyWrapper key) {
+        super(key);
     }
 }

@@ -22,18 +22,19 @@ import org.keycloak.jose.jws.JWSInput;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
 
-public class MLDSA65ClientSignatureVerifierProvider implements ClientSignatureVerifierProvider {
+public class MLDSAClientSignatureVerifierProvider implements ClientSignatureVerifierProvider {
 
     private final KeycloakSession session;
-    private final String algorithm = Algorithm.MLDSA65;
+    private final String algorithm;
 
-    public MLDSA65ClientSignatureVerifierProvider(KeycloakSession session) {
+    public MLDSAClientSignatureVerifierProvider(KeycloakSession session, String algorithm) {
         this.session = session;
+        this.algorithm = algorithm;
     }
 
     @Override
     public SignatureVerifierContext verifier(ClientModel client, JWSInput input) throws VerificationException {
-        return new ClientMLDSA65SignatureVerifierContext(session, client, input);
+        return new ClientMLDSASignatureVerifierContext(session, client, input);
     }
 
     @Override

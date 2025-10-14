@@ -30,6 +30,6 @@ public class MLDSA65ClientSignatureVerifierProviderFactory implements ClientSign
 
     @Override
     public ClientSignatureVerifierProvider create(KeycloakSession session) {
-        return new MLDSA65ClientSignatureVerifierProvider(session);
+        return new MLDSAClientSignatureVerifierProvider(session, Algorithm.MLDSA65);
     }
 }

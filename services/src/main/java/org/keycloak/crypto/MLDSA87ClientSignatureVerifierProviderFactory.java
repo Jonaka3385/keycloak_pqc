@@ -19,13 +19,17 @@ package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-public class ServerMLDSA65SignatureSignerContext extends AsymmetricSignatureSignerContext {
+public class MLDSA87ClientSignatureVerifierProviderFactory implements ClientSignatureVerifierProviderFactory {
 
-    public ServerMLDSA65SignatureSignerContext(KeycloakSession session, String algorithm) throws SignatureException {
-        super(ServerAsymmetricSignatureSignerContext.getKey(session, algorithm));
+    public static final String ID = Algorithm.MLDSA87;
+
+    @Override
+    public String getId() {
+        return ID;
     }
 
-    public ServerMLDSA65SignatureSignerContext(KeyWrapper key) {
-        super(key);
+    @Override
+    public ClientSignatureVerifierProvider create(KeycloakSession session) {
+        return new MLDSAClientSignatureVerifierProvider(session, Algorithm.MLDSA87);
     }
 }

@@ -20,34 +20,36 @@ package org.keycloak.crypto;
 import org.keycloak.common.VerificationException;
 import org.keycloak.models.KeycloakSession;
 
-public class MLDSA65SignatureProvider implements SignatureProvider {
+public class MLDSASignatureProvider implements SignatureProvider {
 
     private final KeycloakSession session;
+    private final String algorithm;
 
-    public MLDSA65SignatureProvider(KeycloakSession session) {
+    public MLDSASignatureProvider(KeycloakSession session, String algorithm) {
         this.session = session;
+        this.algorithm = algorithm;
     }
 
     @Override
     public SignatureSignerContext signer() throws SignatureException {
-        return new ServerMLDSA65SignatureSignerContext(session, Algorithm.MLDSA65);
+        return new ServerMLDSASignatureSignerContext(session, algorithm);
     }
 
     @Override
     public SignatureSignerContext signer(KeyWrapper key) throws SignatureException {
-        SignatureProvider.checkKeyForSignature(key, Algorithm.MLDSA65, KeyType.AKP);
-        return new ServerMLDSA65SignatureSignerContext(key);
+        SignatureProvider.checkKeyForSignature(key, algorithm, KeyType.AKP);
+        return new ServerMLDSASignatureSignerContext(key);
     }
 
     @Override
     public SignatureVerifierContext verifier(String kid) throws VerificationException {
-        return new ServerMLDSA65SignatureVerifierContext(session, kid, Algorithm.MLDSA65);
+        return new ServerMLDSASignatureVerifierContext(session, kid, algorithm);
     }
 
     @Override
     public SignatureVerifierContext verifier(KeyWrapper key) throws VerificationException {
-        SignatureProvider.checkKeyForVerification(key, Algorithm.MLDSA65, KeyType.AKP);
-        return new ServerMLDSA65SignatureVerifierContext(key);
+        SignatureProvider.checkKeyForVerification(key, algorithm, KeyType.AKP);
+        return new ServerMLDSASignatureVerifierContext(key);
     }
 
     @Override

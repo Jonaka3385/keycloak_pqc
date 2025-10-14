@@ -40,7 +40,9 @@ public class JavaAlgorithm {
     public static final String SHA512 = "SHA-512";
     public static final String SHAKE256 = "SHAKE256";
 
+    public static final String MLDSA44 = "ML-DSA-44";
     public static final String MLDSA65 = "ML-DSA-65";
+    public static final String MLDSA87 = "ML-DSA-87";
 
     public static String getJavaAlgorithm(String algorithm) {
         return getJavaAlgorithm(algorithm, null);
@@ -77,8 +79,12 @@ public class JavaAlgorithm {
                     return curve;
                 }
                 return Ed25519;
+            case Algorithm.MLDSA44:
+                return MLDSA44;
             case Algorithm.MLDSA65:
                 return MLDSA65;
+            case Algorithm.MLDSA87:
+                return MLDSA87;
             case Algorithm.AES:
                 return AES;
             default:
@@ -119,7 +125,9 @@ public class JavaAlgorithm {
                     }
                 }
                 return SHA512;
+            case MLDSA44:
             case MLDSA65:
+            case MLDSA87:
                 return SHAKE256;
             case Algorithm.AES:
                 return AES;
@@ -139,7 +147,9 @@ public class JavaAlgorithm {
             case Algorithm.Ed448:
             case Algorithm.Ed25519:
                 return KeyType.OKP;
+            case Algorithm.MLDSA44:
             case Algorithm.MLDSA65:
+            case Algorithm.MLDSA87:
                 return KeyType.AKP;
             default:
                 return KeyType.OCT;
@@ -162,12 +172,8 @@ public class JavaAlgorithm {
         return getJavaAlgorithm(algorithm).contains("ML-DSA");
     }
 
-    public static boolean isMlkemJavaAlgorithm(String algorithm) {
-        return getJavaAlgorithm(algorithm).contains("ML-KEM");
-    }
-
     public static boolean isPQCJavaAlgorithm(String algorithm) {
-        return isMldsaJavaAlgorithm(algorithm) || isMlkemJavaAlgorithm(algorithm);
+        return isMldsaJavaAlgorithm(algorithm);
     }
 
     public static boolean isHMACJavaAlgorithm(String algorithm) {
