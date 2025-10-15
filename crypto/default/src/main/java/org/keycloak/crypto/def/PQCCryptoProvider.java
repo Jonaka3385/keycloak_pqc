@@ -46,9 +46,12 @@ public class PQCCryptoProvider implements CryptoProvider {
     private Map<String, Object> providers = new ConcurrentHashMap<>();
 
     public PQCCryptoProvider() {
-        // Make sure to instantiate this only once due it is expensive. And skip registration if already available in Java security providers (EG. due explicitly configured in java security file)
         Provider existingBcPqc = Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID);
         this.bcpqcProvider = existingBcPqc == null ? new BouncyCastlePQCProvider() : existingBcPqc;
+
+        providers.put(CryptoConstants.Dilithium2, bcpqcProvider);
+        providers.put(CryptoConstants.Dilithium3, bcpqcProvider);
+        providers.put(CryptoConstants.Dilithium5, bcpqcProvider);
 
         if (existingBcPqc == null) {
             Security.addProvider(this.bcpqcProvider);

@@ -15,9 +15,12 @@ public class CryptoConstants {
     public static final String ECDH_ES_A192KW = "ECDH-ES+A192KW";
     public static final String ECDH_ES_A256KW = "ECDH-ES+A256KW";
 
-    public static final String MLDSA44 = "ML-DSA-44";
-    public static final String MLDSA65 = "ML-DSA-65";
-    public static final String MLDSA87 = "ML-DSA-87";
+    public static final String Dilithium2 = "Dilithium2";
+    public static final String Dilithium3 = "Dilithium3";
+    public static final String Dilithium5 = "Dilithium5";
+    public static final String MLDSA44 = Dilithium2;
+    public static final String MLDSA65 = Dilithium3;
+    public static final String MLDSA87 = Dilithium5;
 
     // Constant for the OCSP provider
     // public static final String OCSP = "OCSP";

@@ -65,8 +65,17 @@ public class KeyUtils {
         return kpg.generateKeyPair();
     }
 
-    public static KeyPair generateMLDSAKey() throws NoSuchAlgorithmException, NoSuchProviderException {
-        KeyPairGenerator kpg = CryptoIntegration.getProvider().getKeyPairGen("ML-DSA-65");
+    public static KeyPair generateMLDSAKey(int type) throws NoSuchAlgorithmException, NoSuchProviderException {
+        KeyPairGenerator kpg;
+        if (type == 44) {
+            kpg = CryptoIntegration.getProvider().getKeyPairGen("ML-DSA-44");
+        } else if (type == 65) {
+            kpg = CryptoIntegration.getProvider().getKeyPairGen("ML-DSA-65");
+        } else if (type == 87) {
+            kpg = CryptoIntegration.getProvider().getKeyPairGen("ML-DSA-87");
+        } else {
+            throw new IllegalStateException("Unknown ML-DSA type: " + type);
+        }
         return kpg.generateKeyPair();
     }
 

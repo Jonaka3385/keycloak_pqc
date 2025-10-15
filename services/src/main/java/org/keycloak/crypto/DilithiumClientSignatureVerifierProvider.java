@@ -18,38 +18,28 @@
 package org.keycloak.crypto;
 
 import org.keycloak.common.VerificationException;
+import org.keycloak.jose.jws.JWSInput;
+import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
 
-public class MLDSASignatureProvider implements SignatureProvider {
+public class DilithiumClientSignatureVerifierProvider implements ClientSignatureVerifierProvider {
 
     private final KeycloakSession session;
     private final String algorithm;
 
-    public MLDSASignatureProvider(KeycloakSession session, String algorithm) {
+    public DilithiumClientSignatureVerifierProvider(KeycloakSession session, String algorithm) {
         this.session = session;
         this.algorithm = algorithm;
     }
 
     @Override
-    public SignatureSignerContext signer() throws SignatureException {
-        return new ServerMLDSASignatureSignerContext(session, algorithm);
+    public SignatureVerifierContext verifier(ClientModel client, JWSInput input) throws VerificationException {
+        return new ClientDilithiumSignatureVerifierContext(session, client, input);
     }
 
     @Override
-    public SignatureSignerContext signer(KeyWrapper key) throws SignatureException {
-        SignatureProvider.checkKeyForSignature(key, algorithm, KeyType.AKP);
-        return new ServerMLDSASignatureSignerContext(key);
-    }
-
-    @Override
-    public SignatureVerifierContext verifier(String kid) throws VerificationException {
-        return new ServerMLDSASignatureVerifierContext(session, kid, algorithm);
-    }
-
-    @Override
-    public SignatureVerifierContext verifier(KeyWrapper key) throws VerificationException {
-        SignatureProvider.checkKeyForVerification(key, algorithm, KeyType.AKP);
-        return new ServerMLDSASignatureVerifierContext(key);
+    public String getAlgorithm() {
+        return algorithm;
     }
 
     @Override

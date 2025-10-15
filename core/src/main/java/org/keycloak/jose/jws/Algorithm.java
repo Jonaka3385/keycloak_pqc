@@ -43,9 +43,12 @@ public enum Algorithm {
     EdDSA(AlgorithmType.EDDSA, null),
     Ed25519(AlgorithmType.EDDSA, null),
     Ed448(AlgorithmType.EDDSA, null),
-    MLDSA44(AlgorithmType.MLDSA, null),
-    MLDSA65(AlgorithmType.MLDSA, null),
-    MLDSA87(AlgorithmType.MLDSA, null),
+    MLDSA44(AlgorithmType.DILITHIUM, null),
+    MLDSA65(AlgorithmType.DILITHIUM, null),
+    MLDSA87(AlgorithmType.DILITHIUM, null),
+    Dilithium2(AlgorithmType.DILITHIUM, null),
+    Dilithium3(AlgorithmType.DILITHIUM, null),
+    Dilithium5(AlgorithmType.DILITHIUM, null),
     ;
 
     private AlgorithmType type;

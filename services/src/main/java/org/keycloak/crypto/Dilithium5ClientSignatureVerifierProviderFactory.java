@@ -19,7 +19,7 @@ package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-public class MLDSA87ClientSignatureVerifierProviderFactory implements ClientSignatureVerifierProviderFactory {
+public class Dilithium5ClientSignatureVerifierProviderFactory implements ClientSignatureVerifierProviderFactory {
 
     public static final String ID = Algorithm.MLDSA87;
 
@@ -30,6 +30,6 @@ public class MLDSA87ClientSignatureVerifierProviderFactory implements ClientSign
 
     @Override
     public ClientSignatureVerifierProvider create(KeycloakSession session) {
-        return new MLDSAClientSignatureVerifierProvider(session, Algorithm.MLDSA87);
+        return new DilithiumClientSignatureVerifierProvider(session, Algorithm.MLDSA87);
     }
 }

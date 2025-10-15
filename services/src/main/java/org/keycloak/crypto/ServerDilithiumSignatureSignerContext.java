@@ -19,17 +19,13 @@ package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-public class MLDSA44ClientSignatureVerifierProviderFactory implements ClientSignatureVerifierProviderFactory {
+public class ServerDilithiumSignatureSignerContext extends AsymmetricSignatureSignerContext {
 
-    public static final String ID = Algorithm.MLDSA44;
-
-    @Override
-    public String getId() {
-        return ID;
+    public ServerDilithiumSignatureSignerContext(KeycloakSession session, String algorithm) throws SignatureException {
+        super(ServerAsymmetricSignatureSignerContext.getKey(session, algorithm));
     }
 
-    @Override
-    public ClientSignatureVerifierProvider create(KeycloakSession session) {
-        return new MLDSAClientSignatureVerifierProvider(session, Algorithm.MLDSA44);
+    public ServerDilithiumSignatureSignerContext(KeyWrapper key) {
+        super(key);
     }
 }

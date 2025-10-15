@@ -42,9 +42,12 @@ public interface Algorithm {
     String Ed25519 = "Ed25519";
     String Ed448 = "Ed448";
 
-    String MLDSA44 = "ML-DSA-44";
-    String MLDSA65 = "ML-DSA-65";
-    String MLDSA87 = "ML-DSA-87";
+    String Dilithium2 = "Dilithium2";
+    String Dilithium3 = "Dilithium3";
+    String Dilithium5 = "Dilithium5";
+    String MLDSA44 = Dilithium2;
+    String MLDSA65 = Dilithium3;
+    String MLDSA87 = Dilithium5;
 
     /* RSA Encryption Algorithms */
     String RSA1_5 = CryptoConstants.RSA1_5;

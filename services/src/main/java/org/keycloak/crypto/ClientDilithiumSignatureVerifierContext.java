@@ -23,9 +23,9 @@ import org.keycloak.keys.loader.PublicKeyStorageManager;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
 
-public class ClientMLDSASignatureVerifierContext extends AsymmetricSignatureVerifierContext {
+public class ClientDilithiumSignatureVerifierContext extends AsymmetricSignatureVerifierContext {
 
-    public ClientMLDSASignatureVerifierContext(KeycloakSession session, ClientModel client, JWSInput input) throws VerificationException {
+    public ClientDilithiumSignatureVerifierContext(KeycloakSession session, ClientModel client, JWSInput input) throws VerificationException {
         super(getKey(session, client, input));
     }
 
