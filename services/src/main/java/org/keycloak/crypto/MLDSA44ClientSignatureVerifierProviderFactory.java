@@ -19,7 +19,8 @@ package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-public class Dilithium2ClientSignatureVerifierProviderFactory implements ClientSignatureVerifierProviderFactory {
+// MLDSA44 = Dilithium2
+public class MLDSA44ClientSignatureVerifierProviderFactory implements ClientSignatureVerifierProviderFactory {
 
     public static final String ID = Algorithm.MLDSA44;
 
@@ -30,6 +31,6 @@ public class Dilithium2ClientSignatureVerifierProviderFactory implements ClientS
 
     @Override
     public ClientSignatureVerifierProvider create(KeycloakSession session) {
-        return new DilithiumClientSignatureVerifierProvider(session, Algorithm.MLDSA44);
+        return new MLDSAClientSignatureVerifierProvider(session, Algorithm.MLDSA44);
     }
 }

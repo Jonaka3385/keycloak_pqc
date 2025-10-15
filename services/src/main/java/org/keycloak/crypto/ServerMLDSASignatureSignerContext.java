@@ -19,13 +19,14 @@ package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-public class ServerDilithiumSignatureSignerContext extends AsymmetricSignatureSignerContext {
+// MLDSA = Dilithium
+public class ServerMLDSASignatureSignerContext extends AsymmetricSignatureSignerContext {
 
-    public ServerDilithiumSignatureSignerContext(KeycloakSession session, String algorithm) throws SignatureException {
+    public ServerMLDSASignatureSignerContext(KeycloakSession session, String algorithm) throws SignatureException {
         super(ServerAsymmetricSignatureSignerContext.getKey(session, algorithm));
     }
 
-    public ServerDilithiumSignatureSignerContext(KeyWrapper key) {
+    public ServerMLDSASignatureSignerContext(KeyWrapper key) {
         super(key);
     }
 }

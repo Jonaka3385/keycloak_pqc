@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-public class Dilithium3ClientSignatureVerifierProviderFactory implements ClientSignatureVerifierProviderFactory {
+// MLDSA87 = Dilithium5
+public class MLDSA87SignatureProviderFactory implements SignatureProviderFactory {
 
-    public static final String ID = Algorithm.MLDSA65;
+    public static final String ID = Algorithm.MLDSA87;
 
     @Override
     public String getId() {
@@ -29,7 +29,7 @@ public class Dilithium3ClientSignatureVerifierProviderFactory implements ClientS
     }
 
     @Override
-    public ClientSignatureVerifierProvider create(KeycloakSession session) {
-        return new DilithiumClientSignatureVerifierProvider(session, Algorithm.MLDSA65);
+    public SignatureProvider create(KeycloakSession session) {
+        return new MLDSASignatureProvider(session, Algorithm.MLDSA87);
     }
 }

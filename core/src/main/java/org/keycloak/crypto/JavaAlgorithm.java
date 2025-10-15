@@ -176,7 +176,7 @@ public class JavaAlgorithm {
     }
 
     public static boolean isDilithiumJavaAlgorithm(String algorithm) {
-        return getJavaAlgorithm(algorithm).contains("Dilithium");
+        return ( getJavaAlgorithm(algorithm).contains("Dilithium") || getJavaAlgorithm(algorithm).contains("ML-DSA") );
     }
 
     public static boolean isPQCJavaAlgorithm(String algorithm) {

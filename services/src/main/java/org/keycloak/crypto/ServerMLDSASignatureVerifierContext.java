@@ -18,32 +18,16 @@
 package org.keycloak.crypto;
 
 import org.keycloak.common.VerificationException;
-import org.keycloak.jose.jws.JWSInput;
-import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
 
-public class DilithiumClientSignatureVerifierProvider implements ClientSignatureVerifierProvider {
+// MLDSA = Dilithium
+public class ServerMLDSASignatureVerifierContext extends  AsymmetricSignatureVerifierContext {
 
-    private final KeycloakSession session;
-    private final String algorithm;
-
-    public DilithiumClientSignatureVerifierProvider(KeycloakSession session, String algorithm) {
-        this.session = session;
-        this.algorithm = algorithm;
+    public ServerMLDSASignatureVerifierContext(KeycloakSession session, String kid, String algorithm) throws VerificationException {
+        super(ServerAsymmetricSignatureVerifierContext.getKey(session, kid, algorithm));
     }
 
-    @Override
-    public SignatureVerifierContext verifier(ClientModel client, JWSInput input) throws VerificationException {
-        return new ClientDilithiumSignatureVerifierContext(session, client, input);
-    }
-
-    @Override
-    public String getAlgorithm() {
-        return algorithm;
-    }
-
-    @Override
-    public boolean isAsymmetricAlgorithm() {
-        return true;
+    public ServerMLDSASignatureVerifierContext(KeyWrapper key) {
+        super(key);
     }
 }

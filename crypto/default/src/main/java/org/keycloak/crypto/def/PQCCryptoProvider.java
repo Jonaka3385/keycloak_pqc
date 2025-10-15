@@ -36,10 +36,9 @@ import org.keycloak.common.util.BouncyIntegration;
 import org.keycloak.common.util.KeystoreUtil.KeystoreFormat;
 import org.keycloak.crypto.JavaAlgorithm;
 
-
 public class PQCCryptoProvider implements CryptoProvider {
 
-    private static final Logger log = Logger.getLogger(DefaultCryptoProvider.class);
+    private static final Logger log = Logger.getLogger(PQCCryptoProvider.class);
 
     private final Provider bcpqcProvider;
 
@@ -49,9 +48,9 @@ public class PQCCryptoProvider implements CryptoProvider {
         Provider existingBcPqc = Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID);
         this.bcpqcProvider = existingBcPqc == null ? new BouncyCastlePQCProvider() : existingBcPqc;
 
-        providers.put(CryptoConstants.Dilithium2, bcpqcProvider);
-        providers.put(CryptoConstants.Dilithium3, bcpqcProvider);
-        providers.put(CryptoConstants.Dilithium5, bcpqcProvider);
+        providers.put(CryptoConstants.Dilithium2, bcpqcProvider); // ML-DSA-44
+        providers.put(CryptoConstants.Dilithium3, bcpqcProvider); // ML-DSA-65
+        providers.put(CryptoConstants.Dilithium5, bcpqcProvider); // ML-DSA-87
 
         if (existingBcPqc == null) {
             Security.addProvider(this.bcpqcProvider);

@@ -18,9 +18,10 @@ package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-public class Dilithium2SignatureProviderFactory implements SignatureProviderFactory {
+// MLDSA65 = Dilithium3
+public class MLDSA65SignatureProviderFactory implements SignatureProviderFactory {
 
-    public static final String ID = Algorithm.MLDSA44;
+    public static final String ID = Algorithm.MLDSA65;
 
     @Override
     public String getId() {
@@ -29,6 +30,6 @@ public class Dilithium2SignatureProviderFactory implements SignatureProviderFact
 
     @Override
     public SignatureProvider create(KeycloakSession session) {
-        return new DilithiumSignatureProvider(session, Algorithm.MLDSA44);
+        return new MLDSASignatureProvider(session, Algorithm.MLDSA65);
     }
 }
