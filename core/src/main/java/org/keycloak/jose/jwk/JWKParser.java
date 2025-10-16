@@ -40,12 +40,6 @@ import org.keycloak.util.JsonSerialization;
  */
 public class JWKParser {
 
-    static {
-        if (Security.getProvider("BCPQC") == null) {
-            Security.addProvider(new BouncyCastlePQCProvider());
-        }
-    }
-
     protected JWK jwk;
 
     private JWKParser() {
@@ -154,8 +148,13 @@ public class JWKParser {
         }
     }
 
+    private static void checkPQC() {
+        if (Security.getProvider("BCPQC") == null) Security.addProvider(new BouncyCastlePQCProvider());
+    }
+
     private static PublicKey createAKPPublicKey(JsonNode jwk) {
         String alg = jwk.path(AKPPublicJWK.ALGORITHM).asText(null);
+        checkPQC();
         if (alg == null) {
             throw new IllegalArgumentException("Missing 'alg' parameter in AKP-JWK");
         }

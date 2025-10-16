@@ -100,12 +100,6 @@ import java.util.stream.Stream;
  */
 public class TestingOIDCEndpointsApplicationResource {
 
-    static {
-        if (Security.getProvider("BCPQC") == null) {
-            Security.addProvider(new BouncyCastlePQCProvider());
-        }
-    }
-
     public static final String PRIVATE_KEY = "privateKey";
     public static final String PUBLIC_KEY = "publicKey";
 
@@ -218,8 +212,13 @@ public class TestingOIDCEndpointsApplicationResource {
         return keyPair;
     }
 
+    private static void checkPQC() {
+        if (Security.getProvider("BCPQC") == null) Security.addProvider(new BouncyCastlePQCProvider());
+    }
+
     private KeyPair generateMldsaKey(String algorithm) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         KeyPairGenerator keyGen;
+        checkPQC();
         try {
             keyGen = KeyPairGenerator.getInstance(algorithm, "BCPQC");
         } catch (NoSuchProviderException e) {

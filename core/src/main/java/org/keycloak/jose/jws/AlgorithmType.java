@@ -28,6 +28,5 @@ public enum AlgorithmType {
     AES,
     ECDSA,
     EDDSA,
-    DILITHIUM
-
+    MLDSA
 }

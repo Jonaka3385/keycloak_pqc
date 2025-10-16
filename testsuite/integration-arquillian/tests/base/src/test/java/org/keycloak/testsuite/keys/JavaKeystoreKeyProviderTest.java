@@ -210,7 +210,7 @@ public class JavaKeystoreKeyProviderTest extends AbstractKeycloakTest {
                 assertEquals(KeyType.OKP, key.getType());
                 assertEquals(keyAlgorithm, key.getAlgorithm());
             }
-            case DILITHIUM -> {
+            case MLDSA -> {
                 assertEquals(KeyType.AKP, key.getType());
                 assertEquals(keyAlgorithm, key.getAlgorithm());
             }
@@ -377,7 +377,7 @@ public class JavaKeystoreKeyProviderTest extends AbstractKeycloakTest {
                 this.generatedKeystore = KeystoreUtils.generateKeystore(folder, keystoreType, "keyalias", "password", "password",
                         KeyUtils.generateEdDSAKey(Algorithm.Ed25519));
             }
-            case DILITHIUM -> {
+            case MLDSA -> {
                 this.generatedKeystore = KeystoreUtils.generateKeystore(folder, keystoreType, "keyalias", "password", "password",
                         KeyUtils.generateMLDSAKey(keyAlgorithm));
             }

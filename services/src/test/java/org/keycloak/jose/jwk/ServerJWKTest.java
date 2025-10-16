@@ -46,12 +46,6 @@ import org.keycloak.util.JsonSerialization;
  */
 public class ServerJWKTest {
 
-    static {
-        if (Security.getProvider("BCPQC") == null) {
-            Security.addProvider(new BouncyCastlePQCProvider());
-        }
-    }
-
     @ClassRule
     public static CryptoInitRule cryptoInitRule = new CryptoInitRule();
 
@@ -118,9 +112,14 @@ public class ServerJWKTest {
         verify(data, sign, JavaAlgorithm.Ed448, publicKeyFromJwk);
     }
 
+    private static void checkPQC() {
+        if (Security.getProvider("BCPQC") == null) Security.addProvider(new BouncyCastlePQCProvider());
+    }
+
     private byte[] sign(byte[] data, String javaAlgorithm, PrivateKey key) throws Exception {
         Signature signature;
         if ( JavaAlgorithm.isPQCJavaAlgorithm(javaAlgorithm) ) {
+            checkPQC();
             signature = Signature.getInstance(javaAlgorithm, "BCPQC");
         } else {
             signature = Signature.getInstance(javaAlgorithm);
@@ -133,6 +132,7 @@ public class ServerJWKTest {
     private boolean verify(byte[] data, byte[] signature, String javaAlgorithm, PublicKey key) throws Exception {
         Signature verifier;
         if ( JavaAlgorithm.isPQCJavaAlgorithm(javaAlgorithm) ) {
+            checkPQC();
             verifier = Signature.getInstance(javaAlgorithm, "BCPQC");
         } else {
             verifier = Signature.getInstance(javaAlgorithm);

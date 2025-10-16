@@ -40,6 +40,7 @@ public class JavaAlgorithm {
     public static final String SHA512 = "SHA-512";
     public static final String SHAKE256 = "SHAKE256";
 
+    /* ML-DSA currently Dilithium in BouncyCastle. May change in future specifications */
     public static final String Dilithium2 = "Dilithium2";
     public static final String Dilithium3 = "Dilithium3";
     public static final String Dilithium5 = "Dilithium5";
@@ -172,15 +173,15 @@ public class JavaAlgorithm {
     }
 
     public static boolean isMldsaJavaAlgorithm(String algorithm) {
-        return isDilithiumJavaAlgorithm(algorithm);
-    }
-
-    public static boolean isDilithiumJavaAlgorithm(String algorithm) {
         return ( getJavaAlgorithm(algorithm).contains("Dilithium") || getJavaAlgorithm(algorithm).contains("ML-DSA") );
     }
 
+    public static boolean isDilithiumJavaAlgorithm(String algorithm) {
+        return isMldsaJavaAlgorithm(algorithm);
+    }
+
     public static boolean isPQCJavaAlgorithm(String algorithm) {
-        return isDilithiumJavaAlgorithm(algorithm);
+        return isMldsaJavaAlgorithm(algorithm);
     }
 
     public static boolean isHMACJavaAlgorithm(String algorithm) {

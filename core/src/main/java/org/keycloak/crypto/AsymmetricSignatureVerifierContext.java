@@ -28,12 +28,6 @@ import java.security.Signature;
 
 public class AsymmetricSignatureVerifierContext implements SignatureVerifierContext {
 
-    static {
-        if (Security.getProvider("BCPQC") == null) {
-            Security.addProvider(new BouncyCastlePQCProvider());
-        }
-    }
-
     private final KeyWrapper key;
 
     public AsymmetricSignatureVerifierContext(KeyWrapper key) {
@@ -62,9 +56,14 @@ public class AsymmetricSignatureVerifierContext implements SignatureVerifierCont
         }
     }
 
+    private static void checkPQC() {
+        if (Security.getProvider("BCPQC") == null) Security.addProvider(new BouncyCastlePQCProvider());
+    }
+
     private Signature getSignature() throws NoSuchAlgorithmException, NoSuchProviderException {
         try {
             if (JavaAlgorithm.isPQCJavaAlgorithm(key.getAlgorithm())) {
+                checkPQC();
                 return Signature.getInstance(key.getAlgorithm(), "BCPQC");
             } else {
                 return Signature.getInstance(JavaAlgorithm.getJavaAlgorithm(key.getAlgorithmOrDefault(), key.getCurve()));

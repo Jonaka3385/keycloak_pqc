@@ -48,9 +48,9 @@ public class PQCCryptoProvider implements CryptoProvider {
         Provider existingBcPqc = Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID);
         this.bcpqcProvider = existingBcPqc == null ? new BouncyCastlePQCProvider() : existingBcPqc;
 
-        providers.put(CryptoConstants.Dilithium2, bcpqcProvider); // ML-DSA-44
-        providers.put(CryptoConstants.Dilithium3, bcpqcProvider); // ML-DSA-65
-        providers.put(CryptoConstants.Dilithium5, bcpqcProvider); // ML-DSA-87
+        providers.put(CryptoConstants.MLDSA44, bcpqcProvider);
+        providers.put(CryptoConstants.MLDSA65, bcpqcProvider);
+        providers.put(CryptoConstants.MLDSA87, bcpqcProvider);
 
         if (existingBcPqc == null) {
             Security.addProvider(this.bcpqcProvider);

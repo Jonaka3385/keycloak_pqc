@@ -42,6 +42,7 @@ public interface Algorithm {
     String Ed25519 = "Ed25519";
     String Ed448 = "Ed448";
 
+    /* ML-DSA currently Dilithium in BouncyCastle. May change in future specifications */
     String Dilithium2 = "Dilithium2";
     String Dilithium3 = "Dilithium3";
     String Dilithium5 = "Dilithium5";

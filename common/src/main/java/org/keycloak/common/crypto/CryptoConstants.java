@@ -15,6 +15,7 @@ public class CryptoConstants {
     public static final String ECDH_ES_A192KW = "ECDH-ES+A192KW";
     public static final String ECDH_ES_A256KW = "ECDH-ES+A256KW";
 
+    /* ML-DSA currently Dilithium in BouncyCastle. May change in future specifications */
     public static final String Dilithium2 = "Dilithium2";
     public static final String Dilithium3 = "Dilithium3";
     public static final String Dilithium5 = "Dilithium5";

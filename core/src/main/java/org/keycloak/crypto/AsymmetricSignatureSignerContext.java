@@ -24,12 +24,6 @@ import java.security.Signature;
 
 public class AsymmetricSignatureSignerContext implements SignatureSignerContext {
 
-    static {
-        if (Security.getProvider("BCPQC") == null) {
-            Security.addProvider(new BouncyCastlePQCProvider());
-        }
-    }
-
     protected final KeyWrapper key;
 
     public AsymmetricSignatureSignerContext(KeyWrapper key) throws SignatureException {
@@ -51,11 +45,16 @@ public class AsymmetricSignatureSignerContext implements SignatureSignerContext 
         return JavaAlgorithm.getJavaAlgorithmForHash(key.getAlgorithmOrDefault(), key.getCurve());
     }
 
+    private static void checkPQC() {
+        if (Security.getProvider("BCPQC") == null) Security.addProvider(new BouncyCastlePQCProvider());
+    }
+
     @Override
     public byte[] sign(byte[] data) throws SignatureException {
         try {
             Signature signature;
             if (JavaAlgorithm.isPQCJavaAlgorithm(key.getAlgorithm())) {
+                checkPQC();
                 signature = Signature.getInstance(key.getAlgorithm(), "BCPQC");
             } else {
                 signature = Signature.getInstance(JavaAlgorithm.getJavaAlgorithm(key.getAlgorithmOrDefault(), key.getCurve()));
