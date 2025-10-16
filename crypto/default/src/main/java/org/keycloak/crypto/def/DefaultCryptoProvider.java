@@ -75,7 +75,6 @@ public class DefaultCryptoProvider implements CryptoProvider {
         }
     }
 
-
     @Override
     public Provider getBouncyCastleProvider() {
         return bcProvider;

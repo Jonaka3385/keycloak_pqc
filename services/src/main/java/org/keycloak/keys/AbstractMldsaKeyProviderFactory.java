@@ -19,6 +19,7 @@ package org.keycloak.keys;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.component.ComponentValidationException;
 import org.keycloak.crypto.Algorithm;
+import org.keycloak.crypto.JavaAlgorithm;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.provider.ConfigurationValidationHelper;
@@ -53,19 +54,12 @@ public abstract class AbstractMldsaKeyProviderFactory implements KeyProviderFact
                 .checkBoolean(Attributes.ACTIVE_PROPERTY, false);
     }
 
-    public static KeyPair generateMldsaKeyPair(int keySize) {
-        String alg;
-        if (keySize == 44) {
-            alg = Algorithm.MLDSA44;
-        } else if (keySize == 65) {
-            alg = Algorithm.MLDSA65;
-        } else if (keySize == 87) {
-            alg = Algorithm.MLDSA87;
-        } else {
-            throw new IllegalStateException("Unknown key size: " + keySize);
+    public static KeyPair generateMldsaKeyPair(String algorithm) {
+        if (!JavaAlgorithm.isMldsaJavaAlgorithm(algorithm)) {
+            throw new IllegalArgumentException(algorithm + " is not supported");
         }
         try {
-            KeyPairGenerator keyGen = KeyPairGenerator.getInstance(alg);
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance(algorithm);
             return keyGen.generateKeyPair();
         } catch (Exception e) {
             throw new RuntimeException(e);

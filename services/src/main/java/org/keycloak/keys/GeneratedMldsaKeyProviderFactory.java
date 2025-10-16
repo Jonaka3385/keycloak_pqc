@@ -22,6 +22,7 @@ import org.keycloak.common.util.MultivaluedHashMap;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.component.ComponentValidationException;
 import org.keycloak.crypto.Algorithm;
+import org.keycloak.crypto.JavaAlgorithm;
 import org.keycloak.crypto.KeyUse;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
@@ -95,18 +96,12 @@ public class GeneratedMldsaKeyProviderFactory extends AbstractMldsaKeyProviderFa
 
     private void generateKeys(ComponentModel model) {
         KeyPair keyPair;
-        int keySize;
-        if (model.get(Attributes.ALGORITHM_KEY).equals(Algorithm.MLDSA44)) {
-            keySize = 44;
-        } else if (model.get(Attributes.ALGORITHM_KEY).equals(Algorithm.MLDSA65)) {
-            keySize = 65;
-        } else if(model.get(Attributes.ALGORITHM_KEY).equals(Algorithm.MLDSA87)) {
-            keySize = 87;
-        } else {
-            throw new IllegalStateException("No known ML-DSA Algorithm: " + model.get(Attributes.ALGORITHM_KEY));
+        String algorithm = model.get(Attributes.ALGORITHM_KEY);
+        if (!JavaAlgorithm.isMldsaJavaAlgorithm(algorithm)) {
+            throw new IllegalStateException("No known ML-DSA Algorithm: " + algorithm);
         }
         try {
-            keyPair = generateMldsaKeyPair(keySize);
+            keyPair = generateMldsaKeyPair(algorithm);
             model.put(MLDSA_PRIVATE_KEY_KEY, Base64.encodeBytes(keyPair.getPrivate().getEncoded()));
             model.put(MLDSA_PUBLIC_KEY_KEY, Base64.encodeBytes(keyPair.getPublic().getEncoded()));
         } catch (Throwable t) {

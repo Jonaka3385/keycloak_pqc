@@ -133,10 +133,10 @@ public class TestingOIDCEndpointsApplicationResource {
                                             @QueryParam("keepExistingKeys") Boolean keepExistingKeys,
                                             @QueryParam("kid") String kid) {
         try {
-            KeyPair keyPair = null;
+            KeyPair keyPair;
             KeyUse keyUse = KeyUse.SIG;
             if (jwaAlgorithm == null) jwaAlgorithm = Algorithm.RS256;
-            String keyType = null;
+            String keyType;
 
             switch (jwaAlgorithm) {
                 case Algorithm.RS256:
@@ -179,7 +179,7 @@ public class TestingOIDCEndpointsApplicationResource {
                 case Algorithm.MLDSA65:
                 case Algorithm.MLDSA87:
                     keyType = KeyType.AKP;
-                    keyPair = generateMldsaKeyPair(jwaAlgorithm);
+                    keyPair = generateMldsaKey(jwaAlgorithm);
                     break;
                 default :
                     throw new RuntimeException("Unsupported signature algorithm");
@@ -218,7 +218,7 @@ public class TestingOIDCEndpointsApplicationResource {
         return keyPair;
     }
 
-    private KeyPair generateMldsaKeyPair(String algorithm) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+    private KeyPair generateMldsaKey(String algorithm) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         KeyPairGenerator keyGen;
         try {
             keyGen = KeyPairGenerator.getInstance(algorithm, "BCPQC");
