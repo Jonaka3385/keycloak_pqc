@@ -31,7 +31,10 @@ public enum SignatureAlgorithm {
     RSA_SHA256_MGF1("http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1", "http://www.w3.org/2001/04/xmlenc#sha256", "SHA256withRSAandMGF1"),
     RSA_SHA512("http://www.w3.org/2001/04/xmldsig-more#rsa-sha512", "http://www.w3.org/2001/04/xmlenc#sha512", "SHA512withRSA"),
     RSA_SHA512_MGF1("http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1", "http://www.w3.org/2001/04/xmlenc#sha512", "SHA512withRSAandMGF1"),
-    DSA_SHA1("http://www.w3.org/2000/09/xmldsig#dsa-sha1", "http://www.w3.org/2000/09/xmldsig#sha1", "SHA1withDSA")
+    DSA_SHA1("http://www.w3.org/2000/09/xmldsig#dsa-sha1", "http://www.w3.org/2000/09/xmldsig#sha1", "SHA1withDSA"),
+    MLDSA44("TBD", null, "Dilithium2"),
+    MLDSA65("TBD", null, "Dilithium3"),
+    MLDSA87("TBD", null, "Dilithium5")
     ;
     private final String xmlSignatureMethod;
     private final String xmlSignatureDigestMethod;
@@ -47,6 +50,9 @@ public enum SignatureAlgorithm {
         signatureMethodMap.put(RSA_SHA512.getXmlSignatureMethod(), RSA_SHA512);
         signatureMethodMap.put(RSA_SHA512_MGF1.getXmlSignatureMethod(), RSA_SHA512_MGF1);
         signatureMethodMap.put(DSA_SHA1.getXmlSignatureMethod(), DSA_SHA1);
+        signatureMethodMap.put(MLDSA44.getXmlSignatureMethod(), MLDSA44);
+        signatureMethodMap.put(MLDSA65.getXmlSignatureMethod(), MLDSA65);
+        signatureMethodMap.put(MLDSA87.getXmlSignatureMethod(), MLDSA87);
 
         signatureDigestMethodMap.put(RSA_SHA1.getXmlSignatureDigestMethod(), RSA_SHA1);
         signatureDigestMethodMap.put(RSA_SHA256.getXmlSignatureDigestMethod(), RSA_SHA256);
@@ -54,6 +60,9 @@ public enum SignatureAlgorithm {
         signatureDigestMethodMap.put(RSA_SHA512.getXmlSignatureDigestMethod(), RSA_SHA512);
         signatureDigestMethodMap.put(RSA_SHA512_MGF1.getXmlSignatureDigestMethod(), RSA_SHA512_MGF1);
         signatureDigestMethodMap.put(DSA_SHA1.getXmlSignatureDigestMethod(), DSA_SHA1);
+        signatureDigestMethodMap.put(MLDSA44.getXmlSignatureDigestMethod(), MLDSA44);
+        signatureDigestMethodMap.put(MLDSA65.getXmlSignatureDigestMethod(), MLDSA65);
+        signatureDigestMethodMap.put(MLDSA87.getXmlSignatureDigestMethod(), MLDSA87);
     }
 
     public static SignatureAlgorithm getFromXmlMethod(String xml) {
