@@ -37,7 +37,7 @@ public class GeneratedMldsaKeyProviderFactory extends AbstractMldsaKeyProviderFa
 
     public static final String ID = "mldsa-generated";
 
-    private static final String HELP_TEXT = "Generates ML-DSA keys";
+    private static final String HELP_TEXT = "Generates Dilithium keys";
 
     private static final List<ProviderConfigProperty> CONFIG_PROPERTIES = AbstractMldsaKeyProviderFactory.configurationBuilder()
             .property(MLDSA_PROPERTY)
@@ -90,22 +90,22 @@ public class GeneratedMldsaKeyProviderFactory extends AbstractMldsaKeyProviderFa
     public void validateConfiguration(KeycloakSession session, RealmModel realm, ComponentModel model) throws ComponentValidationException {
         super.validateConfiguration(session, realm, model);
 
-        generateKeys(model);
+        String algorithm = realm.getDefaultSignatureAlgorithm();
+        generateKeys(model, algorithm);
         logger.debugv("Generated keys for {0}", realm.getName());
     }
 
-    private void generateKeys(ComponentModel model) {
+    private void generateKeys(ComponentModel model, String algorithm) throws IllegalArgumentException {
         KeyPair keyPair;
-        String algorithm = model.get(Attributes.ALGORITHM_KEY);
-        if (!JavaAlgorithm.isMldsaJavaAlgorithm(algorithm)) {
-            throw new IllegalStateException("No known ML-DSA Algorithm: " + algorithm);
+        if (!JavaAlgorithm.isDilithiumJavaAlgorithm(algorithm)) {
+            throw new IllegalStateException("No known Dilithium Algorithm: " + algorithm);
         }
         try {
             keyPair = generateMldsaKeyPair(algorithm);
             model.put(MLDSA_PRIVATE_KEY_KEY, Base64.encodeBytes(keyPair.getPrivate().getEncoded()));
             model.put(MLDSA_PUBLIC_KEY_KEY, Base64.encodeBytes(keyPair.getPublic().getEncoded()));
         } catch (Throwable t) {
-            throw new ComponentValidationException("Failed to generate ML-DSA keys", t);
+            throw new ComponentValidationException("Failed to generate Dilithium keys", t);
         }
     }
 }

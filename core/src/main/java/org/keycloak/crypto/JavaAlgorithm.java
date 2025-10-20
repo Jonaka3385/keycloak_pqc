@@ -78,17 +78,17 @@ public class JavaAlgorithm {
                 return PS384;
             case Algorithm.PS512:
                 return PS512;
-            case Algorithm.EdDSA:
-                if (curve != null) {
-                    return curve;
-                }
-                return Ed25519;
             case Algorithm.MLDSA44:
                 return MLDSA44;
             case Algorithm.MLDSA65:
                 return MLDSA65;
             case Algorithm.MLDSA87:
                 return MLDSA87;
+            case Algorithm.EdDSA:
+                if (curve != null) {
+                    return curve;
+                }
+                return Ed25519;
             case Algorithm.AES:
                 return AES;
             default:

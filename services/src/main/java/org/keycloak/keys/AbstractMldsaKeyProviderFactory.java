@@ -33,10 +33,10 @@ import static org.keycloak.provider.ProviderConfigProperty.LIST_TYPE;
 
 public abstract class AbstractMldsaKeyProviderFactory implements KeyProviderFactory {
 
-    protected static final String MLDSA_PRIVATE_KEY_KEY = "mldsaPrivateKey";
-    protected static final String MLDSA_PUBLIC_KEY_KEY = "mldsaPublicKey";
+    protected static final String MLDSA_PRIVATE_KEY_KEY = "dilithiumPrivateKey";
+    protected static final String MLDSA_PUBLIC_KEY_KEY = "dilithiumPublicKey";
 
-    protected static ProviderConfigProperty MLDSA_PROPERTY = new ProviderConfigProperty("ML-DSA", "Generates ML-DSA keys",
+    protected static ProviderConfigProperty MLDSA_PROPERTY = new ProviderConfigProperty("Dilithium", "Generates Dilithium keys",
             LIST_TYPE, Algorithm.MLDSA44, Algorithm.MLDSA65, Algorithm.MLDSA87);
 
     public final static ProviderConfigurationBuilder configurationBuilder() {

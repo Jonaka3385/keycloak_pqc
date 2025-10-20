@@ -16,6 +16,7 @@
  */
 package org.keycloak.keys;
 
+import org.jboss.logging.Logger;
 import org.keycloak.common.util.KeyUtils;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.crypto.Algorithm;
@@ -30,6 +31,8 @@ import java.util.stream.Stream;
 
 public abstract class AbstractMldsaKeyProvider implements KeyProvider {
 
+    private static final Logger logger = Logger.getLogger(AbstractMldsaKeyProvider.class);
+
     private final KeyStatus status;
 
     private final ComponentModel model;
@@ -42,7 +45,7 @@ public abstract class AbstractMldsaKeyProvider implements KeyProvider {
         this.model = model;
         this.status = KeyStatus.from(model.get(Attributes.ACTIVE_KEY, true), model.get(Attributes.ENABLED_KEY, true));
 
-        this.algorithm = model.get(Attributes.ALGORITHM_KEY);
+        this.algorithm = realm.getDefaultSignatureAlgorithm();
 
         if (model.hasNote(KeyWrapper.class.getName())) {
             key = model.getNote(KeyWrapper.class.getName());
