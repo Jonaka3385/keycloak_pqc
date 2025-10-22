@@ -436,7 +436,7 @@ public class BCFIPSOCSPProvider extends OCSPProvider {
                     if (ad.getAccessMethod().equals(AccessDescription.id_ad_ocsp)) {
                         // See https://www.ietf.org/rfc/rfc2560.txt, 3.1 Certificate Content
                         if (ad.getAccessLocation().getTagNo() == GeneralName.uniformResourceIdentifier) {
-                            DERIA5String value = (DERIA5String) DERIA5String.getInstance(ad.getAccessLocation().getName());
+                            DERIA5String value = DERIA5String.getInstance(ad.getAccessLocation().getName());
                             responderURIs.add(value.getString());
                         }
                     }

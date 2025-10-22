@@ -43,13 +43,9 @@ public enum Algorithm {
     EdDSA(AlgorithmType.EDDSA, null),
     Ed25519(AlgorithmType.EDDSA, null),
     Ed448(AlgorithmType.EDDSA, null),
-    /* ML-DSA currently Dilithium in BouncyCastle. May change in future specifications */
     MLDSA44(AlgorithmType.MLDSA, null),
     MLDSA65(AlgorithmType.MLDSA, null),
     MLDSA87(AlgorithmType.MLDSA, null),
-    Dilithium2(AlgorithmType.MLDSA, null),
-    Dilithium3(AlgorithmType.MLDSA, null),
-    Dilithium5(AlgorithmType.MLDSA, null),
     ;
 
     private AlgorithmType type;

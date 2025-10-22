@@ -118,7 +118,7 @@ public class ServerJWKTest {
 
     private byte[] sign(byte[] data, String javaAlgorithm, PrivateKey key) throws Exception {
         Signature signature;
-        if ( JavaAlgorithm.isPQCJavaAlgorithm(javaAlgorithm) ) {
+        if ( JavaAlgorithm.isMldsaJavaAlgorithm(javaAlgorithm) ) {
             checkPQC();
             signature = Signature.getInstance(javaAlgorithm, "BCPQC");
         } else {
@@ -131,7 +131,7 @@ public class ServerJWKTest {
 
     private boolean verify(byte[] data, byte[] signature, String javaAlgorithm, PublicKey key) throws Exception {
         Signature verifier;
-        if ( JavaAlgorithm.isPQCJavaAlgorithm(javaAlgorithm) ) {
+        if ( JavaAlgorithm.isMldsaJavaAlgorithm(javaAlgorithm) ) {
             checkPQC();
             verifier = Signature.getInstance(javaAlgorithm, "BCPQC");
         } else {

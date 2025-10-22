@@ -63,9 +63,9 @@ public class DefaultCryptoProvider implements CryptoProvider {
         providers.put(CryptoConstants.ECDH_ES_A128KW, new BCEcdhEsAlgorithmProvider());
         providers.put(CryptoConstants.ECDH_ES_A192KW, new BCEcdhEsAlgorithmProvider());
         providers.put(CryptoConstants.ECDH_ES_A256KW, new BCEcdhEsAlgorithmProvider());
-        providers.put(CryptoConstants.MLDSA44, new PQCCryptoProvider()); // Dilithium2
-        providers.put(CryptoConstants.MLDSA65, new PQCCryptoProvider()); // Dilithium3
-        providers.put(CryptoConstants.MLDSA87, new PQCCryptoProvider()); // Dilithium5
+        providers.put(CryptoConstants.MLDSA44, new PQCCryptoProvider());
+        providers.put(CryptoConstants.MLDSA65, new PQCCryptoProvider());
+        providers.put(CryptoConstants.MLDSA87, new PQCCryptoProvider());
 
         if (existingBc == null) {
             Security.addProvider(this.bcProvider);

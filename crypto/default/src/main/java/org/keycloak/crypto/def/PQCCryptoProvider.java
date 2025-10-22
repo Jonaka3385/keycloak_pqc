@@ -45,7 +45,7 @@ public class PQCCryptoProvider implements CryptoProvider {
     private Map<String, Object> providers = new ConcurrentHashMap<>();
 
     public PQCCryptoProvider() {
-        Provider existingBcPqc = Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID);
+        Provider existingBcPqc = Security.getProvider("BCPQC");
         this.bcpqcProvider = existingBcPqc == null ? new BouncyCastlePQCProvider() : existingBcPqc;
 
         providers.put(CryptoConstants.MLDSA44, bcpqcProvider);

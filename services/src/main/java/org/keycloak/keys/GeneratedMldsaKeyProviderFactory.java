@@ -97,7 +97,7 @@ public class GeneratedMldsaKeyProviderFactory extends AbstractMldsaKeyProviderFa
 
     private void generateKeys(ComponentModel model, String algorithm) throws IllegalArgumentException {
         KeyPair keyPair;
-        if (!JavaAlgorithm.isDilithiumJavaAlgorithm(algorithm)) {
+        if (!JavaAlgorithm.isMldsaJavaAlgorithm(algorithm)) {
             throw new IllegalStateException("No known Dilithium Algorithm: " + algorithm);
         }
         try {
