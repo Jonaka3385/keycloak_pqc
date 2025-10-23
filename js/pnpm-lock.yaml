@@ -224,8 +224,8 @@ importers:
         version: 4.0.1(react-router-dom@6.30.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@axe-core/playwright':
-        specifier: ^4.10.2
-        version: 4.10.2(playwright-core@1.56.0)
+        specifier: ^4.11.0
+        version: 4.11.0(playwright-core@1.56.0)
       '@playwright/test':
         specifier: ^1.56.0
         version: 1.56.0
@@ -552,8 +552,8 @@ packages:
     resolution: {integrity: sha512-ExypohE8L7FvKBHxu7UpwcV9XVfyS+AqNZKyKIfxYwJyD9l7Gw6pmMYd7J2uopJsPEIUf44/emEFds6nFUx/dw==}
     engines: {node: '>= 10'}
 
-  '@axe-core/playwright@4.10.2':
-    resolution: {integrity: sha512-6/b5BJjG6hDaRNtgzLIfKr5DfwyiLHO4+ByTLB0cJgWSM8Ll7KqtdblIS6bEkwSF642/Ex91vNqIl3GLXGlceg==}
+  '@axe-core/playwright@4.11.0':
+    resolution: {integrity: sha512-70vBT/Ylqpm65RQz2iCG2o0JJCEG/WCNyefTr2xcOcr1CoSee60gNQYUMZZ7YukoKkFLv26I/jjlsvwwp532oQ==}
     peerDependencies:
       playwright-core: '>= 1.0.0'
 
@@ -2049,8 +2049,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axe-core@4.10.3:
-    resolution: {integrity: sha512-Xm7bpRXnDSX2YE2YFfBk2FnF0ep6tmG7xPh8iHee8MIcrgq762Nkce856dYtJYLkuIoYZvGfTs/PbZhideTcEg==}
+  axe-core@4.11.0:
+    resolution: {integrity: sha512-ilYanEU8vxxBexpJd8cWM4ElSQq4QctCLKih0TSfjIfCQTeyH/6zVrmIJfLPrKTKJRbiG+cfnZbQIjAlJmF1jQ==}
     engines: {node: '>=4'}
 
   b4a@1.7.1:
@@ -4620,9 +4620,9 @@ snapshots:
       '@ast-grep/napi-win32-ia32-msvc': 0.36.3
       '@ast-grep/napi-win32-x64-msvc': 0.36.3
 
-  '@axe-core/playwright@4.10.2(playwright-core@1.56.0)':
+  '@axe-core/playwright@4.11.0(playwright-core@1.56.0)':
     dependencies:
-      axe-core: 4.10.3
+      axe-core: 4.11.0
       playwright-core: 1.56.0
 
   '@babel/code-frame@7.27.1':
@@ -6250,7 +6250,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axe-core@4.10.3: {}
+  axe-core@4.11.0: {}
 
   b4a@1.7.1: {}
 
