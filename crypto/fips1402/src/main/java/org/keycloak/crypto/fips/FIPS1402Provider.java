@@ -104,8 +104,8 @@ public class FIPS1402Provider implements CryptoProvider {
             log.debugf("Security provider %s already loaded", existingBcFipsProvider.getName());
         }
 
-        // log.infof("FIPS1402Provider created: KC(%s%s, FIPS-JVM: %s)", bcFipsProvider, CryptoServicesRegistrar.isInApprovedOnlyMode() ? " Approved Mode" : "", isSystemFipsEnabled());
-        // TODO
+        //log.infof("FIPS1402Provider created: KC(%s%s, FIPS-JVM: %s)", bcFipsProvider, CryptoServicesRegistrar.isInApprovedOnlyMode() ? " Approved Mode" : "", isSystemFipsEnabled());
+        //TODO replace isInApprovedOnlyMode() with working alternative
         log.infof("FIPS1402Provider created: KC(%s%s, FIPS-JVM: %s)", bcFipsProvider, " Approved Mode", isSystemFipsEnabled());
     }
 

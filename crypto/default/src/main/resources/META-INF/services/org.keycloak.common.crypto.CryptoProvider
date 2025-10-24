@@ -15,4 +15,3 @@
 # limitations under the License.
 
 org.keycloak.crypto.def.DefaultCryptoProvider
-org.keycloak.crypto.def.PQCCryptoProvider

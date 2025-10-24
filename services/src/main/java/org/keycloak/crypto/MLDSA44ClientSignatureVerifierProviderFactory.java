@@ -19,7 +19,6 @@ package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-// MLDSA44 = Dilithium2
 public class MLDSA44ClientSignatureVerifierProviderFactory implements ClientSignatureVerifierProviderFactory {
 
     public static final String ID = Algorithm.MLDSA44;

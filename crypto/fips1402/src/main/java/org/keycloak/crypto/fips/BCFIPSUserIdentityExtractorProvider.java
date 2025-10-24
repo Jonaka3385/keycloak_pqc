@@ -22,7 +22,6 @@ import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.ASN1String;
 import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DERUTF8String;
 import org.bouncycastle.asn1.x500.AttributeTypeAndValue;
@@ -165,7 +164,7 @@ public class BCFIPSUserIdentityExtractorProvider  extends UserIdentityExtractorP
                                         tempOid = oid.getId();
 
                                         ASN1Encodable principalNameEncoded = asn1Sequence.getObjectAt(1);
-                                        DERUTF8String principalName = (DERUTF8String) DERUTF8String.getInstance(principalNameEncoded);
+                                        DERUTF8String principalName = (DERUTF8String) DERUTF8String.getInstance(unwrap(principalNameEncoded));
 
                                         tempOtherName = principalName.getString();
 

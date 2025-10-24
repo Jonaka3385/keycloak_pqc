@@ -30,9 +30,11 @@ import java.security.PublicKey;
 import java.security.Security;
 import java.security.Signature;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.junit.ClassRule;
 import org.junit.Test;
+import org.keycloak.common.crypto.CryptoConstants;
 import org.keycloak.common.util.KeyUtils;
 import org.keycloak.crypto.Algorithm;
 import org.keycloak.crypto.JavaAlgorithm;
@@ -112,15 +114,11 @@ public class ServerJWKTest {
         verify(data, sign, JavaAlgorithm.Ed448, publicKeyFromJwk);
     }
 
-    private static void checkPQC() {
-        if (Security.getProvider("BCPQC") == null) Security.addProvider(new BouncyCastlePQCProvider());
-    }
-
     private byte[] sign(byte[] data, String javaAlgorithm, PrivateKey key) throws Exception {
         Signature signature;
-        if ( JavaAlgorithm.isPQCJavaAlgorithm(javaAlgorithm) ) {
-            checkPQC();
-            signature = Signature.getInstance(javaAlgorithm, "BCPQC");
+        if ( JavaAlgorithm.isMldsaJavaAlgorithm(javaAlgorithm) ) {
+            if (Security.getProvider(CryptoConstants.BC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastleProvider());
+            signature = Signature.getInstance(javaAlgorithm, CryptoConstants.BC_PROVIDER_ID);
         } else {
             signature = Signature.getInstance(javaAlgorithm);
         }
@@ -131,9 +129,9 @@ public class ServerJWKTest {
 
     private boolean verify(byte[] data, byte[] signature, String javaAlgorithm, PublicKey key) throws Exception {
         Signature verifier;
-        if ( JavaAlgorithm.isPQCJavaAlgorithm(javaAlgorithm) ) {
-            checkPQC();
-            verifier = Signature.getInstance(javaAlgorithm, "BCPQC");
+        if ( JavaAlgorithm.isMldsaJavaAlgorithm(javaAlgorithm) ) {
+            if (Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastlePQCProvider());
+            verifier = Signature.getInstance(javaAlgorithm, CryptoConstants.BC_PQC_PROVIDER_ID);
         } else {
             verifier = Signature.getInstance(javaAlgorithm);
         }

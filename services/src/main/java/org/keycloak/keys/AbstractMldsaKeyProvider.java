@@ -31,8 +31,6 @@ import java.util.stream.Stream;
 
 public abstract class AbstractMldsaKeyProvider implements KeyProvider {
 
-    private static final Logger logger = Logger.getLogger(AbstractMldsaKeyProvider.class);
-
     private final KeyStatus status;
 
     private final ComponentModel model;

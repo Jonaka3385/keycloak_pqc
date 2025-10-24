@@ -173,14 +173,6 @@ public class JavaAlgorithm {
         return ( getJavaAlgorithm(algorithm).contains("Dilithium") || getJavaAlgorithm(algorithm).contains("ML-DSA") );
     }
 
-    public static boolean isDilithiumJavaAlgorithm(String algorithm) {
-        return isMldsaJavaAlgorithm(algorithm);
-    }
-
-    public static boolean isPQCJavaAlgorithm(String algorithm) {
-        return isMldsaJavaAlgorithm(algorithm);
-    }
-
     public static boolean isHMACJavaAlgorithm(String algorithm) {
         return getJavaAlgorithm(algorithm).contains("HMAC");
     }

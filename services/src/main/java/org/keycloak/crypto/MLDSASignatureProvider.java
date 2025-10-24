@@ -20,7 +20,6 @@ package org.keycloak.crypto;
 import org.keycloak.common.VerificationException;
 import org.keycloak.models.KeycloakSession;
 
-// MLDSA = Dilithium
 public class MLDSASignatureProvider implements SignatureProvider {
 
     private final KeycloakSession session;

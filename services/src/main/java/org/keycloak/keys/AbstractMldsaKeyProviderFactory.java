@@ -16,6 +16,9 @@
  */
 package org.keycloak.keys;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.keycloak.common.crypto.CryptoConstants;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.component.ComponentValidationException;
 import org.keycloak.crypto.Algorithm;
@@ -28,15 +31,16 @@ import org.keycloak.provider.ProviderConfigurationBuilder;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.Security;
 
 import static org.keycloak.provider.ProviderConfigProperty.LIST_TYPE;
 
 public abstract class AbstractMldsaKeyProviderFactory implements KeyProviderFactory {
 
-    protected static final String MLDSA_PRIVATE_KEY_KEY = "dilithiumPrivateKey";
-    protected static final String MLDSA_PUBLIC_KEY_KEY = "dilithiumPublicKey";
+    protected static final String MLDSA_PRIVATE_KEY_KEY = "mldsaPrivateKey";
+    protected static final String MLDSA_PUBLIC_KEY_KEY = "mldsaPublicKey";
 
-    protected static ProviderConfigProperty MLDSA_PROPERTY = new ProviderConfigProperty("Dilithium", "Generates Dilithium keys",
+    protected static ProviderConfigProperty MLDSA_PROPERTY = new ProviderConfigProperty("Algorithm", "Generates ML-DSA keys",
             LIST_TYPE, Algorithm.MLDSA44, Algorithm.MLDSA65, Algorithm.MLDSA87);
 
     public final static ProviderConfigurationBuilder configurationBuilder() {
@@ -59,7 +63,8 @@ public abstract class AbstractMldsaKeyProviderFactory implements KeyProviderFact
             throw new IllegalArgumentException(algorithm + " is not supported");
         }
         try {
-            KeyPairGenerator keyGen = KeyPairGenerator.getInstance(algorithm);
+            if (Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastlePQCProvider());
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance(algorithm, CryptoConstants.BC_PQC_PROVIDER_ID);
             return keyGen.generateKeyPair();
         } catch (Exception e) {
             throw new RuntimeException(e);

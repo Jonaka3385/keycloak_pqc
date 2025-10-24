@@ -18,7 +18,6 @@ package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-// MLDSA65 = Dilithium3
 public class MLDSA65SignatureProviderFactory implements SignatureProviderFactory {
 
     public static final String ID = Algorithm.MLDSA65;

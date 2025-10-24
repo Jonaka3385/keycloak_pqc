@@ -38,7 +38,8 @@ public class FIPS1402HmacTest extends HmacTest {
     @Override
     public void testHmacSignaturesWithShortSecretKey() throws Exception {
         // With BCFIPS approved mode, secret key used for HmacSHA256 must be at least 112 bits long (14 characters). Short key won't work
-        Assume.assumeFalse(CryptoServicesRegistrar.isInApprovedOnlyMode());
+        //Assume.assumeFalse(CryptoServicesRegistrar.isInApprovedOnlyMode());
+        //TODO replace isInApprovedOnlyMode() with working alternative
         super.testHmacSignaturesWithShortSecretKey();
     }
 }

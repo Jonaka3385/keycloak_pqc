@@ -19,7 +19,6 @@ package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-// MLDSA = Dilithium
 public class ServerMLDSASignatureSignerContext extends AsymmetricSignatureSignerContext {
 
     public ServerMLDSASignatureSignerContext(KeycloakSession session, String algorithm) throws SignatureException {

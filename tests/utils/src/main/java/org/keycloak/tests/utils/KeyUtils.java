@@ -67,7 +67,7 @@ public class KeyUtils {
 
     public static KeyPair generateMLDSAKey(String algorithm) throws NoSuchAlgorithmException, NoSuchProviderException {
         if (!JavaAlgorithm.isMldsaJavaAlgorithm(algorithm)) {
-            throw new NoSuchAlgorithmException("Not a Dilithium Algorithm");
+            throw new NoSuchAlgorithmException("Not a ML-DSA Algorithm");
         }
         KeyPairGenerator kpg = CryptoIntegration.getProvider().getKeyPairGen(algorithm);
         return kpg.generateKeyPair();

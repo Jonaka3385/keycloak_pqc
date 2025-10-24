@@ -17,6 +17,7 @@
 
 package org.keycloak.testsuite.rest.resource;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.jboss.resteasy.reactive.NoCache;
 
@@ -27,6 +28,7 @@ import jakarta.ws.rs.Consumes;
 
 import org.keycloak.OAuth2Constants;
 import org.keycloak.OAuthErrorException;
+import org.keycloak.common.crypto.CryptoConstants;
 import org.keycloak.common.util.Base64;
 import org.keycloak.common.util.Base64Url;
 import org.keycloak.common.util.KeyUtils;
@@ -212,15 +214,11 @@ public class TestingOIDCEndpointsApplicationResource {
         return keyPair;
     }
 
-    private static void checkPQC() {
-        if (Security.getProvider("BCPQC") == null) Security.addProvider(new BouncyCastlePQCProvider());
-    }
-
-    private KeyPair generateMldsaKey(String algorithm) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+    private KeyPair generateMldsaKey(String algorithm) throws NoSuchAlgorithmException {
         KeyPairGenerator keyGen;
-        checkPQC();
+        if (Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastlePQCProvider());
         try {
-            keyGen = KeyPairGenerator.getInstance(algorithm, "BCPQC");
+            keyGen = KeyPairGenerator.getInstance(algorithm, CryptoConstants.BC_PQC_PROVIDER_ID);
         } catch (NoSuchProviderException e) {
             throw new RuntimeException(e);
         }

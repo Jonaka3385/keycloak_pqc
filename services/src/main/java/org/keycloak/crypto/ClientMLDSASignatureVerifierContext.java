@@ -23,7 +23,6 @@ import org.keycloak.keys.loader.PublicKeyStorageManager;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
 
-// MLDSA = Dilithium
 public class ClientMLDSASignatureVerifierContext extends AsymmetricSignatureVerifierContext {
 
     public ClientMLDSASignatureVerifierContext(KeycloakSession session, ClientModel client, JWSInput input) throws VerificationException {

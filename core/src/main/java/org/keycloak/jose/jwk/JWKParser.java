@@ -29,7 +29,9 @@ import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+import org.keycloak.common.crypto.CryptoConstants;
 import org.keycloak.common.crypto.CryptoIntegration;
 import org.keycloak.common.util.Base64Url;
 import org.keycloak.crypto.KeyType;
@@ -148,17 +150,11 @@ public class JWKParser {
         }
     }
 
-    private static void checkPQC() {
-        if (Security.getProvider("BCPQC") == null) Security.addProvider(new BouncyCastlePQCProvider());
-    }
-
     private static PublicKey createAKPPublicKey(JsonNode jwk) {
         String alg = jwk.path(AKPPublicJWK.ALGORITHM).asText(null);
-        checkPQC();
         if (alg == null) {
             throw new IllegalArgumentException("Missing 'alg' parameter in AKP-JWK");
         }
-
         String pub = jwk.path(AKPPublicJWK.PUB).asText(null);
         if (pub == null) {
             throw new IllegalArgumentException("Missing 'pub' parameter in AKP-JWK");
@@ -171,7 +167,8 @@ public class JWKParser {
 
             KeyFactory keyFactory;
             try {
-                keyFactory = KeyFactory.getInstance(alg, "BCPQC");
+                if (Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastlePQCProvider());
+                keyFactory = KeyFactory.getInstance(alg, CryptoConstants.BC_PQC_PROVIDER_ID);
             } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException("Failed to create AKP public key from JWK", e);
             }

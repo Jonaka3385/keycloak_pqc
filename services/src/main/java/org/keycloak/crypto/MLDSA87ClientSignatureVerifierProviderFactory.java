@@ -19,7 +19,6 @@ package org.keycloak.crypto;
 
 import org.keycloak.models.KeycloakSession;
 
-// MLDSA87 = Dilithium5
 public class MLDSA87ClientSignatureVerifierProviderFactory implements ClientSignatureVerifierProviderFactory {
 
     public static final String ID = Algorithm.MLDSA87;

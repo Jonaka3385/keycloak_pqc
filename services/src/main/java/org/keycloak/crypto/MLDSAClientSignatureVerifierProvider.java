@@ -22,7 +22,6 @@ import org.keycloak.jose.jws.JWSInput;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
 
-// MLDSA = Dilithium
 public class MLDSAClientSignatureVerifierProvider implements ClientSignatureVerifierProvider {
 
     private final KeycloakSession session;
