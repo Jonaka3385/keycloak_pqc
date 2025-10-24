@@ -18,7 +18,6 @@
 package org.keycloak.testsuite.rest.resource;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.jboss.resteasy.reactive.NoCache;
 
 import javax.crypto.SecretKey;
@@ -216,9 +215,9 @@ public class TestingOIDCEndpointsApplicationResource {
 
     private KeyPair generateMldsaKey(String algorithm) throws NoSuchAlgorithmException {
         KeyPairGenerator keyGen;
-        if (Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastlePQCProvider());
+        if (Security.getProvider(CryptoConstants.BC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastleProvider());
         try {
-            keyGen = KeyPairGenerator.getInstance(algorithm, CryptoConstants.BC_PQC_PROVIDER_ID);
+            keyGen = KeyPairGenerator.getInstance(algorithm, CryptoConstants.BC_PROVIDER_ID);
         } catch (NoSuchProviderException e) {
             throw new RuntimeException(e);
         }

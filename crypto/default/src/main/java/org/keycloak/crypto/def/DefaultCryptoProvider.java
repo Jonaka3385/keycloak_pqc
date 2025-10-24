@@ -28,7 +28,6 @@ import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
 import org.bouncycastle.jce.spec.ECNamedCurveSpec;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.jboss.logging.Logger;
 import org.keycloak.common.crypto.CryptoProvider;
 import org.keycloak.common.crypto.CryptoConstants;
@@ -64,9 +63,9 @@ public class DefaultCryptoProvider implements CryptoProvider {
         providers.put(CryptoConstants.ECDH_ES_A128KW, new BCEcdhEsAlgorithmProvider());
         providers.put(CryptoConstants.ECDH_ES_A192KW, new BCEcdhEsAlgorithmProvider());
         providers.put(CryptoConstants.ECDH_ES_A256KW, new BCEcdhEsAlgorithmProvider());
-        providers.put(CryptoConstants.MLDSA44, new BouncyCastlePQCProvider());
-        providers.put(CryptoConstants.MLDSA65, new BouncyCastlePQCProvider());
-        providers.put(CryptoConstants.MLDSA87, new BouncyCastlePQCProvider());
+        providers.put(CryptoConstants.MLDSA44, new BouncyCastleProvider());
+        providers.put(CryptoConstants.MLDSA65, new BouncyCastleProvider());
+        providers.put(CryptoConstants.MLDSA87, new BouncyCastleProvider());
 
         if (existingBc == null) {
             Security.addProvider(this.bcProvider);

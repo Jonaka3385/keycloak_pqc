@@ -34,7 +34,7 @@ public class BouncyIntegration {
         Provider provider = CryptoIntegration.getProvider().getBouncyCastleProvider();
         if (provider == null) {
             return Security.getProviders()[0].getName();
-            // throw new RuntimeException("Failed to load required security provider: BouncyCastleProvider, BouncyCastleFipsProvider or BouncyCastlePQCProvider");
+            // throw new RuntimeException("Failed to load required security provider: BouncyCastleProvider or BouncyCastleFipsProvider");
         }
         return provider.getName();
     }

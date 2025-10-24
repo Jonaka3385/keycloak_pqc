@@ -31,7 +31,6 @@ import java.security.Security;
 import java.security.Signature;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.keycloak.common.crypto.CryptoConstants;
@@ -130,8 +129,8 @@ public class ServerJWKTest {
     private boolean verify(byte[] data, byte[] signature, String javaAlgorithm, PublicKey key) throws Exception {
         Signature verifier;
         if ( JavaAlgorithm.isMldsaJavaAlgorithm(javaAlgorithm) ) {
-            if (Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastlePQCProvider());
-            verifier = Signature.getInstance(javaAlgorithm, CryptoConstants.BC_PQC_PROVIDER_ID);
+            if (Security.getProvider(CryptoConstants.BC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastleProvider());
+            verifier = Signature.getInstance(javaAlgorithm, CryptoConstants.BC_PROVIDER_ID);
         } else {
             verifier = Signature.getInstance(javaAlgorithm);
         }

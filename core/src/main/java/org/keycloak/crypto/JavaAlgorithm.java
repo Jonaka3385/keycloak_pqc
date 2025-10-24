@@ -41,9 +41,9 @@ public class JavaAlgorithm {
     public static final String SHAKE256 = "SHAKE256";
 
     /* ML-DSA */
-    public static final String MLDSA44 = "Dilithium2";
-    public static final String MLDSA65 = "Dilithium3";
-    public static final String MLDSA87 = "Dilithium5";
+    public static final String MLDSA44 = "ML-DSA-44";
+    public static final String MLDSA65 = "ML-DSA-65";
+    public static final String MLDSA87 = "ML-DSA-87";
 
     public static String getJavaAlgorithm(String algorithm) {
         return getJavaAlgorithm(algorithm, null);
@@ -170,7 +170,7 @@ public class JavaAlgorithm {
     }
 
     public static boolean isMldsaJavaAlgorithm(String algorithm) {
-        return ( getJavaAlgorithm(algorithm).contains("Dilithium") || getJavaAlgorithm(algorithm).contains("ML-DSA") );
+        return getJavaAlgorithm(algorithm).contains("ML-DSA");
     }
 
     public static boolean isHMACJavaAlgorithm(String algorithm) {

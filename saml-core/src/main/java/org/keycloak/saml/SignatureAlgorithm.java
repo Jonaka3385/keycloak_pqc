@@ -32,9 +32,9 @@ public enum SignatureAlgorithm {
     RSA_SHA512("http://www.w3.org/2001/04/xmldsig-more#rsa-sha512", "http://www.w3.org/2001/04/xmlenc#sha512", "SHA512withRSA"),
     RSA_SHA512_MGF1("http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1", "http://www.w3.org/2001/04/xmlenc#sha512", "SHA512withRSAandMGF1"),
     DSA_SHA1("http://www.w3.org/2000/09/xmldsig#dsa-sha1", "http://www.w3.org/2000/09/xmldsig#sha1", "SHA1withDSA"),
-    MLDSA44("TBD", null, "Dilithium2"),
-    MLDSA65("TBD", null, "Dilithium3"),
-    MLDSA87("TBD", null, "Dilithium5")
+    MLDSA44("TBD", null, "ML-DSA-44"),
+    MLDSA65("TBD", null, "ML-DSA-65"),
+    MLDSA87("TBD", null, "ML-DSA-87")
     ;
     private final String xmlSignatureMethod;
     private final String xmlSignatureDigestMethod;

@@ -17,7 +17,6 @@
 package org.keycloak.crypto;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.keycloak.common.crypto.CryptoConstants;
 
 import java.security.PrivateKey;
@@ -52,8 +51,8 @@ public class AsymmetricSignatureSignerContext implements SignatureSignerContext 
         try {
             Signature signature;
             if (JavaAlgorithm.isMldsaJavaAlgorithm(key.getAlgorithm())) {
-                if (Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastlePQCProvider());
-                signature = Signature.getInstance(key.getAlgorithm(), CryptoConstants.BC_PQC_PROVIDER_ID);
+                if (Security.getProvider(CryptoConstants.BC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastleProvider());
+                signature = Signature.getInstance(key.getAlgorithm(), CryptoConstants.BC_PROVIDER_ID);
             } else {
                 signature = Signature.getInstance(JavaAlgorithm.getJavaAlgorithm(key.getAlgorithmOrDefault(), key.getCurve()));
             }

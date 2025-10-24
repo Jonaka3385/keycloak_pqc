@@ -17,7 +17,6 @@
 package org.keycloak.crypto;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
 import org.keycloak.common.VerificationException;
 import org.keycloak.common.crypto.CryptoConstants;
 import org.keycloak.common.crypto.CryptoIntegration;
@@ -61,8 +60,8 @@ public class AsymmetricSignatureVerifierContext implements SignatureVerifierCont
     private Signature getSignature() throws NoSuchAlgorithmException, NoSuchProviderException {
         try {
             if (JavaAlgorithm.isMldsaJavaAlgorithm(key.getAlgorithm())) {
-                if (Security.getProvider(CryptoConstants.BC_PQC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastlePQCProvider());
-                return Signature.getInstance(key.getAlgorithm(), CryptoConstants.BC_PQC_PROVIDER_ID);
+                if (Security.getProvider(CryptoConstants.BC_PROVIDER_ID) == null) Security.addProvider(new BouncyCastleProvider());
+                return Signature.getInstance(key.getAlgorithm(), CryptoConstants.BC_PROVIDER_ID);
             } else {
                 return Signature.getInstance(JavaAlgorithm.getJavaAlgorithm(key.getAlgorithmOrDefault(), key.getCurve()));
             }
