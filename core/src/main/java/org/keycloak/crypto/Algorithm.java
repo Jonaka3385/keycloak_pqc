@@ -42,13 +42,10 @@ public interface Algorithm {
     String Ed25519 = "Ed25519";
     String Ed448 = "Ed448";
 
-    /* ML-DSA currently Dilithium in BouncyCastle. May change in future specifications */
-    String Dilithium2 = "Dilithium2";
-    String Dilithium3 = "Dilithium3";
-    String Dilithium5 = "Dilithium5";
-    String MLDSA44 = Dilithium2;
-    String MLDSA65 = Dilithium3;
-    String MLDSA87 = Dilithium5;
+    /* ML-DSA */
+    String MLDSA44 = "Dilithium2";
+    String MLDSA65 = "Dilithium3";
+    String MLDSA87 = "Dilithium5";
 
     /* RSA Encryption Algorithms */
     String RSA1_5 = CryptoConstants.RSA1_5;
